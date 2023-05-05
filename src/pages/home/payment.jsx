@@ -11,8 +11,15 @@ import images from 'react-payment-inputs/images'
 import LockIcon from '@mui/icons-material/Lock';
 import { Button } from '@mui/material'
 import Footer from '@/component/footer'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 const Payment = () => {
+
+    const router = useRouter()
+    const data = useSelector(state => state.bookingInsert.data)
+
+    console.log(data.id)
 
     const {
         wrapperProps,
@@ -82,13 +89,17 @@ const Payment = () => {
                                 <h3>Vat</h3>
                                 <h3>-20%</h3>
                             </div>
+                            <div className='flex justify-between items-center'>
+                                <h3>Flight amount</h3>
+                                <h3>${data.total},00</h3>
+                            </div>
                         </div>
                         <div className='flex justify-between mt-5 font-medium text-md border-b-2 pb-3'>
                             <div className=''>
                                 <h3>Total Payment (USD)</h3>
                                 <p className='text-xs'>After 30 days $9.59</p>
                             </div>
-                            <h3>$0</h3>
+                            <h3>${data.total * 0.8 -2},00</h3>
                         </div>
                         <Button color='info' className='px-10 py-3 font-semibold w-full' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Try it free for 30 Days</Button>
                     </div>

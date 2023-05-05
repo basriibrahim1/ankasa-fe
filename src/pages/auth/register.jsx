@@ -5,20 +5,22 @@ import ankasa from '../../assets/ankasa.png'
 import Button from "@mui/material/Button"
 import { CheckCircleOutlined, Visibility, VisibilityOff } from "@mui/icons-material"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { RegisterAction } from "@/storage/action/login/register"
+import { useRouter } from "next/router"
 // import Loading from "@/component/loading"
 
 
 const Register = () => {
 
-    const [isAlertVisible, setIsAlertVisible] = useState(false);
 
-    const handleAlertClose = () => {
-        setIsAlertVisible(false);
-    };
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const [name, setName] = useState()
 
-    const handleButtonClick = () => {
-        setIsAlertVisible(true);
-    };
+
+    const dispatch = useDispatch()
+    const router = useRouter()
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -27,6 +29,17 @@ const Register = () => {
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
     };
+
+
+    const handleRegister = () => {
+        let data = {
+            name : name,
+            email: email,
+            password: password
+        }
+
+        dispatch(RegisterAction(data)).then((res) => router.push('/auth/login'))
+    }
 
 
   return (
@@ -41,14 +54,15 @@ const Register = () => {
                     <h3 className="ml-4 text-3xl font-bold tracking-wide" style={{color:'#414141'}}>Ankasa</h3>
                 </div>
                 <h2 className="mt-40 text-4xl font-bold tracking-wider">Register</h2>
-                <div className="flex flex-col mt-20">
-                    <TextField id="Name" label="Username" variant="standard" type="text"/>
-                    <TextField className="mt-5" id="Email" label="Email" variant="standard" type="email"/>
+                <div className="flex flex-col mt-20 space-y-5">
+                    <TextField id="Name" label="Username" value={name} onChange={(e) => setName(e.target.value)} variant="standard" type="text"/>
+                    <TextField className="mt-5" id="Email" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} variant="standard" type="email"/>
                     <FormControl variant="standard" className="mt-5">
                     <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                     <Input
                         id="standard-adornment-password"
                         type={showPassword ? 'text' : 'password'}
+                        value={password} onChange={(e) => setPassword(e.target.value)}
                         endAdornment={
                         <InputAdornment position="end">
                             <IconButton
@@ -63,7 +77,7 @@ const Register = () => {
                     />
                     </FormControl>
                     <Button
-                        onClick={handleButtonClick}
+                        onClick={handleRegister}
                         variant="contained"
                         className="mt-10 font-semibold tracking-wider h-12 text-md"
                         color="primary"
@@ -71,15 +85,6 @@ const Register = () => {
                     >
                         Register
                     </Button>
-                    {isAlertVisible && (
-                        <Alert
-                        className="mt-3"
-                        icon={<CheckCircleOutlined fontSize="inherit" />}
-                        severity="success"
-                        onClose={handleAlertClose}>
-                        Register Success
-                        </Alert>
-                    )}
                     <p className="mt-5 opacity-90 tracking-wider text-sm">Did you forgot your password? <span className="text-yellow-600">Click here</span> </p>
                 </div>
             </div>

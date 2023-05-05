@@ -1,5 +1,5 @@
-import { RawNavbar, UserNavbar } from '@/component/navbar'
-import React, { useState } from 'react'
+import { UserNavbar } from '@/component/navbar'
+import React, { useEffect, useState } from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Box, Button, Checkbox, FormControlLabel, Slider, Stack, TextField, Typography } from '@mui/material';
@@ -25,6 +25,11 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import PlaceIcon from '@mui/icons-material/Place';
+import { TicketAction } from '@/storage/action/ticket/ticketAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { TicketIdAction } from '@/storage/action/ticket/ticketIdAction';
+import axios from 'axios';
 
 
 const Main = () => {
@@ -170,50 +175,39 @@ const Main = () => {
         setPriceRangeValue(newValue);
       };
 
+    const [isLoading, setIsLoading] = useState(false)
+    const [ticketData, setTicketData] = useState([])
+    // const ticketData = useSelector(state => state.ticket.data)
+    const dispatch = useDispatch()
+    const router = useRouter()
 
-      const ticket = [
-        {
-            id: 1,
-            photo: garuda,
-            name: 'Garuda Indonesia',
-            departure: 'IDN',
-            arrival: 'JPN',
-            departure_time: '12.33',
-            arrival_time: '15.21',
-            transit: 0,
-            Facilities: ['Luggage', 'In-flight Meal', 'Wifi'],
-            Price: '214,00'
-        },
-        {
-            id: 1,
-            photo: asia,
-            name: 'Air Asia',
-            departure: 'IDN',
-            arrival: 'JPN',
-            departure_time: '12.02',
-            arrival_time: '15.21',
-            transit: 1,
-            Facilities: ['Luggage', 'In-flight Meal', ],
-            Price: '180,00'
-        },
-        {
-            id: 1,
-            photo: lion,
-            name: 'Lion Air',
-            departure: 'IDN',
-            arrival: 'JPN',
-            departure_time: '12.33',
-            arrival_time: '19.44',
-            transit: 2,
-            Facilities: ['Luggage', 'Wifi'],
-            Price: '300,00'
-        },
-      ]
+    const handleDetail = (id) => {
+        dispatch(TicketIdAction(id))
+        .then(res => {
+            router.push(`/home/booking/${id}`)
+        })
+        .catch(err => console.log(err))
+    }
+    
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get(`${process.env.REACT_APP_BASE_URL}/ticket`)
+            .then(res => {
+                setTicketData(res.data.data);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setIsLoading(false);
+            });
+    }, []);
 
   return (
     <>
 
-        <div className='flex ml-10 justify-evenly items-center mt-5'>
+        <UserNavbar />
+
+        {/* <div className='flex ml-10 justify-evenly items-center mt-5'>
                 <div className="flex">
                     <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'contain'}} alt='ankasa'/>
                     <h3 className="ml-4 text-3xl font-bold tracking-wide" style={{color:'#414141'}}>Ankasa</h3>
@@ -232,7 +226,7 @@ const Main = () => {
                     <PersonIcon/>
                 </div>
         </div>
-       
+        */}
         <div className='mt-10 p-10 flex' style={{backgroundColor:'#F5F6FA'}}>
             <div className='w-1/6 ml-40'>
                 <div className='flex justify-between'>
@@ -417,16 +411,16 @@ const Main = () => {
                     <div className='flex justify-between'>
                     <div className='flex items-center'>
                         <h3 className='text-2xl font-semibold'>Select Ticket</h3>
-                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>( {ticket.length} flight found )</h3>
+                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>( {ticketData.length} flight found )</h3>
                     </div>
                     <h3 className='text-md font-semibold text-blue-700 mt-1'>Sort by</h3>
                 </div>
 
-            {ticket.map((item, index) => { 
+            {isLoading ? <div>Loading...</div> : ticketData?.map((item, index) => { 
                     const depHours = parseInt(item.departure_time.split('.')[0]);
                     const depMinutes = parseInt(item.departure_time.split('.')[1]);
-                    const arrHours = parseInt(item.arrival_time.split('.')[0]);
-                    const arrMinutes = parseInt(item.arrival_time.split('.')[1]);
+                    const arrHours = parseInt(item.time_arrived.split('.')[0]);
+                    const arrMinutes = parseInt(item.time_arrived.split('.')[1]);
                     
                     let hours = arrHours - depHours;
                     let minutes = arrMinutes - depMinutes;
@@ -441,49 +435,47 @@ const Main = () => {
                 return(
                 <div className='bg-white shadow-sm p-2 mt-7 rounded-lg' key={index}>
                     <div className='flex items-center ml-7 mt-2'>
-                        <Image src={item.photo} alt='lion' className='w-24 h-10' style={{objectFit:'contain'}}/>
+                        <Image src={item.photo} priority={true} alt='lion' width={100} height={100} style={{objectFit:'contain'}}/>
                         <h3 className='ml-5 tracking-wide text-lg font-medium' style={{color:'#595959'}}>{item.name}</h3>
                     </div>
                     <div className='flex justify-between mx-7 mt-7 items-center'>
                         <div className='flex space-x-10'>
                             <div className='text-center'>
-                                <h3 className='font-semibold text-3xl'>{item.departure}</h3>
+                                <h3 className='font-semibold text-3xl'>{item.from_country}</h3>
                                 <p className='tracking-wide text-sm' style={{color:'#595959'}}>{item.departure_time}</p>
                             </div>
                             <div className='items-center justify-center mt-3'>
                             <Image src={plane} alt='plane' className='w-5 h-5 items-center'/>
                             </div>
                             <div className='text-center'>
-                                <h3 className='font-semibold text-3xl'>{item.arrival}</h3>
-                                <p className='tracking-wide text-sm' style={{color:'#595959'}}>{item.arrival_time}</p>
+                                <h3 className='font-semibold text-3xl'>{item.to_country}</h3>
+                                <p className='tracking-wide text-sm' style={{color:'#595959'}}>{item.time_arrived}</p>
                             </div>
                         </div>
                         <div className='text-center'>
                             <p className='font-semibold' style={{color:'#595959'}}>{duration}</p>
                             <p className='tracking-wide text-sm' style={{color:'#595959'}}>
-                                {item.transit !== undefined && typeof(item.transit) === 'number' ?
-                                    (item.transit === 0 ? '( Direct )' : item.transit === 1 ? '( 1 Transit )' : '( Transit 2+ )') : ''}
+                                {item.transit && (item.transit = 0 ? '( Direct )' : item.transit = 1 ? '( 1 Transit )' : '( Transit 2+ )')}
                             </p>
                         </div>
-                        {item.Facilities && 
+                        {item.facilities && 
                             <div className='space-x-3' style={{color:'#595959'}}>
-                                {item.Facilities.map((facility) => {
-                                if (facility === 'Luggage') {
+                                {item.facilities.split(',').map((facility) => {
+                                if (facility === 'luggage') {
                                     return <LuggageIcon />;
-                                } else if (facility === 'In-flight Meal') {
+                                } else if (facility === 'meal') {
                                     return <LunchDiningIcon />;
-                                } else if (facility === 'Wifi') {
+                                } else if (facility === 'wifi') {
                                     return <WifiIcon />;
                                 }
-                                return null;
                                 })}
                             </div>
                             }
                         <div>
-                            <p> <span className='text-blue-500'>${item.Price}</span>/pax</p>
+                            <p> <span className='text-blue-500'>${item.price},00</span>/pax</p>
                         </div>
                         <div>
-                            <Button variant='contained' className='font-semibold rounded-lg tracking-wide' style={{backgroundColor:'#2395FF'}}>Select</Button>
+                            <Button onClick={() => handleDetail(item.id)} variant='contained' className='font-semibold rounded-lg tracking-wide' style={{backgroundColor:'#2395FF'}}>Select</Button>
                         </div>
                     </div>
                     <div className='flex flex items-center mt-5 ml-7 pb-2 text-blue-500 font-semibold'>

@@ -5,10 +5,32 @@ import ankasa from '../../assets/ankasa.png'
 import Button from "@mui/material/Button"
 import { useState } from "react"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { useCookies } from 'react-cookie';
+import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
+import { loginAction } from "@/storage/action/login/login"
 // import Loading from "@/component/loading"
 
 
 const Login = () => {
+
+    const router = useRouter()
+    const dispatch = useDispatch()
+
+    const [cookies, setCookies] = useCookies(['user'])
+
+    const handleLogin = (e) => {
+        e.preventDefault()
+        const data = {
+            email: email,
+            password: password
+        }
+
+        dispatch(loginAction(data, setCookies, router))
+    }
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -26,17 +48,19 @@ const Login = () => {
             </div>
             <div className="flex flex-col w-2/5 mx-16">
                 <div className="flex items-center mt-20">
-                    <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'contain'}} alt='ankasa'/>
+                    <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'cover'}} alt='ankasa'/>
                     <h3 className="ml-4 text-3xl font-bold tracking-wide" style={{color:'#414141'}}>Ankasa</h3>
                 </div>
                 <h2 className="mt-40 text-4xl font-bold tracking-wider">Login</h2>
-                <div className="flex flex-col mt-20">
-                    <TextField id="Email" label="Email" variant="standard" type="email"/>
+                <div className="flex flex-col mt-20 mb-20 space-y-5">
+                    <TextField value={email} onChange={(e) => setEmail(e.target.value)} id="Email" label="Email" variant="standard" type="email"/>
                     <FormControl variant="standard" className="mt-5">
-                    <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <Input
-                        id="standard-adornment-password"
+                        id="password"
                         type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         endAdornment={
                         <InputAdornment position="end">
                             <IconButton
@@ -50,7 +74,7 @@ const Login = () => {
                         }
                     />
                     </FormControl>
-                    <Button  variant="contained" className="mt-10 font-semibold tracking-wider h-12 text-md" color="primary" style={{backgroundColor:'#2395FF'}}>Sign In</Button>
+                    <Button onClick={handleLogin}  variant="contained" className="mt-20 font-semibold tracking-wider h-12 text-md" color="primary" style={{backgroundColor:'#2395FF'}}>Sign In</Button>
                     <p className="mt-5 opacity-90 tracking-wider text-sm">Did you forgot your password? <span className="text-yellow-600">Click here</span> </p>
                 </div>
             </div>

@@ -10,7 +10,6 @@ import generateBarcode from '../../../lib/generateBarcode'
 
 const DetailPass = () => {
 
-
     useEffect(() => {
         generateBarcode('barcodeCanvas', '1234 5678 90AS 6543 21CV')
     },[])

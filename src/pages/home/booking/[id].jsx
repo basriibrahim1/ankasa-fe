@@ -1,26 +1,67 @@
 import { UserNavbar } from '@/component/navbar'
 import { Alert, Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography, makeStyles } from '@mui/material'
 import { MuiTelInput } from 'mui-tel-input'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
-import plane from '../../assets/plane.png'
-import garuda from '../../assets/garuda.png'
+import plane from '../../../assets/plane.png'
+import garuda from '../../../assets/garuda.png'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Footer from '@/component/footer';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { BookingInsertAction } from '@/storage/action/booking/bookingInsertAction';
 
 
 const Booking = () => {
-
-    const [value, setValue] = useState('')
+    const router = useRouter()
+    const {id} = router.query
+    const [cookies, setCookies] = useCookies()
+    const [phone, setPhone] = useState('')
+    const [email, setEmail] = useState('')
+    const [fullname, setFullname] = useState('')
     const [nationality, setNationality] = useState("");
+    const [insuranceChecked, setInsuranceChecked] = useState(false);
+    const [data, setData] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const [total, setTotal] = useState()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        if(!data && id){ 
+            setIsLoading(true);
+            axios.get(`${process.env.REACT_APP_BASE_URL}/ticket/${id}`)
+            .then(res => {
+                setData(res.data.data)
+                setIsLoading(false)
+        })
+    }
+    },[id])
+
+    
+    useEffect(() => {
+        if (data && insuranceChecked) {
+          const price = parseInt(data[0].price);
+          setTotal(price + 2);
+        } else if (data) {
+          const price = parseInt(data[0].price);
+          setTotal(price);
+        }
+      }, [data, insuranceChecked]);
+    
+
+    const handleInsuranceChange = (event) => {
+        setInsuranceChecked(event.target.checked);
+    };
 
     const handleNationalityChange = (event) => {
         setNationality(event.target.value);
     };
 
     const handleChange = (newValue) => {
-        setValue(newValue)
+        setPhone(newValue)
     }
 
     const [checked, setChecked] = useState(false);
@@ -28,6 +69,23 @@ const Booking = () => {
     const handleCheck = (event) => {
         setChecked(event.target.checked);
     };
+
+
+    const insertBooking = () => {
+       
+        let data = {
+            ticket_id : parseInt(id),
+            fullname: fullname,
+            email: email,
+            phone: phone,
+            nationality: nationality,
+            insurance: insuranceChecked,
+            total: total.toString()
+        }
+        dispatch(BookingInsertAction(data, cookies.token)).then(res => router.push('/home/payment'))
+    }
+
+       
 
   return (
     <>
@@ -44,6 +102,8 @@ const Booking = () => {
                         required
                         label="Full Name"
                         variant="standard"
+                        onChange={(e) => setFullname(e.target.value)}
+                        value={fullname}
                         color='info'
                         type='text'
                         focused
@@ -56,6 +116,8 @@ const Booking = () => {
                         required
                         label="Email"
                         variant="standard"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                         color='primary'
                         type='email'
                         focused
@@ -63,7 +125,7 @@ const Booking = () => {
                             style: {color:'#9B96AB'}
                         }}
                     />
-                    <MuiTelInput required label="Phone Number" value={value} onChange={handleChange} variant='standard' color='primary' focused/>
+                    <MuiTelInput required label="Phone Number" value={phone} onChange={handleChange} variant='standard' color='primary' focused/>
                     <Alert severity="warning" className='tracking-wide p-5'>Warning! Please Make sure that all data is correct!</Alert>
                 </div>
             </div>
@@ -84,61 +146,58 @@ const Booking = () => {
                 
                 {checked ?
                 <Box sx={{display:'flex', flexDirection:'column'}}>
-                     <TextField
-                    disabled
-                    label="Title"
-                    variant="standard"
-                    color="primary"
-                    type='text'
-                    inputLabelProps={{
-                        style: { color: "#9B96AB" },
-                      }}
-                    inputProps={{
-                        style: { cursor: "not-allowed" },
-                    }}
+                    <TextField
+                        disabled
+                        label={fullname ? fullname : 'Full name'}
+                        variant="standard"
+                        color="primary"
+                        type='text'
+                        inputLabelProps={{
+                            style: { color: "#9B96AB" },
+                        }}
+                        inputProps={{
+                            style: { cursor: "not-allowed" },
+                        }}
                     /> 
 
                     <TextField
-                    className='mt-5'
-                    disabled
-                    label="Full Name"
-                    variant="standard"
-                    color="primary"
-                    type='text'
-                    inputLabelProps={{
-                        style: { color: "#9B96AB" },
-                      }}
-                    inputProps={{
-                        style: { cursor: "not-allowed" },
-                    }}
+                        className='mt-10'
+                        disabled
+                        label={email ? email : 'Email'}
+                        variant="standard"
+                        color="primary"
+                        type='text'
+                        inputLabelProps={{
+                            style: { color: "#9B96AB" },
+                        }}
+                        inputProps={{
+                            style: { cursor: "not-allowed" },
+                        }}
                     />
                 </Box>
-                   
-                    
-                    
-                    :
-                    <Box sx={{display:'flex', flexDirection:'column'}}>
-                        <TextField
+                :
+                <Box sx={{display:'flex', flexDirection:'column'}}>
+                    <TextField
                         required
-                        label="Title"
+                        label="Full name"
                         variant="standard"
                         color="primary"
                         type='text'
                         focused
                         inputLabelProps={{
-                            style: {color:'#9B96AB'}
-                        }} />
-                        <TextField
+                            style: {color:'#9B96AB'}}} 
+                    />
+                    <TextField
                         className='mt-5'
                         required
-                        label="Full Name"
+                        label="Email"
                         variant="standard"
                         color="primary"
                         type='text'
                         focused
                         inputLabelProps={{
-                            style: {color:'#9B96AB'}
-                        }} />
+                            style: {color:'#9B96AB'}}} 
+                    />
                     </Box>
                 }
 
@@ -151,8 +210,7 @@ const Booking = () => {
                         onChange={handleNationalityChange}
                         inputLabelProps={{
                             style: {color:'#9B96AB'}
-                        }}
-                    >
+                        }}>
                         <MenuItem value="">None</MenuItem>
                         <MenuItem value="Indonesian">Indonesian</MenuItem>
                         <MenuItem value="American">American</MenuItem>
@@ -164,7 +222,7 @@ const Booking = () => {
 
                 <div className='flex flex-col space-y-10 bg-white p-10 mt-10 rounded-lg shadow-md'>
                     <div className='flex items-center justify-between border-b-2 pb-2'>
-                        <FormControlLabel color='primary' control={<Checkbox/>} label='Travel Insurance'  style={{fontWeight:'900'}}/>
+                        <FormControlLabel color='primary' control={<Checkbox checked={insuranceChecked} onChange={handleInsuranceChange}/>} label='Travel Insurance'  style={{fontWeight:'900'}}/>
                         <p style={{color:'#979797'}}><span className='text-blue-500'>$2,00</span>/pax</p>
                     </div>
                     <p className='font-semibold tracking-wide'>Get travel compensation up to $ 10.000,00</p>
@@ -172,28 +230,29 @@ const Booking = () => {
 
 
                 <div className='my-10 justify-center flex'>
-                    <Button color='primary' className='px-10 py-3 font-semibold text-lg' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Proceed to Payment</Button>
+                    <Button color='primary' onClick={() => insertBooking()} className='px-10 py-3 font-semibold text-lg' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Proceed to Payment</Button>
                 </div>
         </div>
 
 
         <div className='w-2/6 ml-20 mr-40'>
             <h3 className='text-2xl font-semibold'>Flight Details</h3>
+            {isLoading ? <div>Loading...</div> : data && data.map(item => (
             <div className='flex flex-col bg-white mt-5 rounded-lg shadow-md'>
                 <div className='space-y-5 border-b-2 p-7'>
                     <div className='flex items-center mt-2'>
-                        <Image src={garuda} alt='lion' className='w-24 h-12' style={{objectFit:'contain'}}/>
-                        <h3 className='ml-5 tracking-wide text-lg font-medium' style={{color:'#595959'}}>Garuda Indonesia</h3>
+                        <Image src={item.photo} alt='lion' width={100} height={100} style={{objectFit:'contain'}}/>
+                        <h3 className='ml-5 tracking-wide text-lg font-medium' style={{color:'#595959'}}>{item.name}</h3>
                     </div>
                     <div className='flex space-x-10'>
-                            <h3 className='font-semibold text-xl'>Medan (IDN)</h3>
+                            <h3 className='font-semibold text-xl'>{item.from_country}</h3>
                             <Image src={plane} alt='plane' className='w-5 items-center'/>
-                            <h3 className='font-semibold text-xl'>Tokyo (JPN)</h3>
+                            <h3 className='font-semibold text-xl'>{item.to_country}</h3>
                     </div>
                     <div className='flex items-center space-x-5 text-sm' style={{color:'#6B6B6B'}}>
-                        <p>Sunday, 15 August 2020</p>
+                        <p>{item.schedule_time}</p>
                         <Typography>-</Typography>             
-                        <p>12.33 - 15.21</p>
+                        <p>{item.departure_time} - {item.time_arrived}</p>
                     </div>
                     <div className='space-y-3'>
                         <div className='flex items-center space-x-2' style={{color:'#2395FF'}}>
@@ -209,12 +268,12 @@ const Booking = () => {
                 <div className='flex p-7 justify-between font-bold text-lg'>
                     <h3 className=''>Total Payment</h3>
                     <div className='flex items-center' style={{color:'#2395FF'}}>
-                        <h3>$ 145,00</h3>
+                        <h3>{insuranceChecked ? parseInt(item.price) + 2 : item.price},00</h3>
                         <KeyboardArrowDownIcon />
                     </div>
                 </div>
-
             </div>
+        ))}
         </div>
     </div>
 
