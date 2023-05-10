@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div>
+    <div className='mt-10'>
         <div className='flex justify-around py-10'>
             <div className='flex flex-col ml-40'>
                 <div className='flex items-center'>

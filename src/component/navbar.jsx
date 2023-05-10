@@ -9,23 +9,18 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
-import { userPayloadAction } from '@/storage/action/user/userPayloadAction'
 import { useRouter } from 'next/router'
+import { Link } from '@mui/material'
 
-export const UserNavbar = () => {
-  const dispatch = useDispatch()
+
+export const UserNavbar = (props) => {
+  const {value, setValue} = props
   const [cookies, setCookies] = useCookies()
   const [isLoading, setIsLoading] = useState(false)
-  const user = useSelector(state => state.userPayload)
-  const userData = user.data[0]
+  const user = useSelector(state => state.userPayload.data[0])
+  const updated = useSelector(state => state.userUpdate.data)
   const router = useRouter()
 
-  useEffect(() => {
-    if (!userData && cookies.token) {
-      setIsLoading(true)
-      dispatch(userPayloadAction(cookies.token)).then(() => setIsLoading(false))
-    }
-  }, [])
 
   return (
     <>
@@ -41,14 +36,12 @@ export const UserNavbar = () => {
           </div>
           <Box sx={{ display: 'flex', alignItems: 'flex-end', marginBottom: 2 }}>
             <Search sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-            <TextField className='w-96' id='input-with-sx' label='Search destination' variant='standard' />
+            <TextField className='w-96' id='input-with-sx' label='Search destination' variant='standard' value={value} onChange={(e) => setValue(e.target.value)}/>
           </Box>
           {cookies.token && (
             <div className='flex space-x-10 font-semibold text-lg'>
-              <h3>Find Ticket</h3>
-              <div onClick={() => router.push('/user/mypass')}>
-                <h3>My Booking</h3>
-              </div>
+                <Link href='/home/main' color='primary' underline='hover'>Find Ticket</Link>
+                <Link href='/user/mypass' color='primary' underline='hover'>My Booking</Link>
             </div>
           )}
 
@@ -56,23 +49,21 @@ export const UserNavbar = () => {
             <div className='space-x-10 text-lg flex items-center'>
               <MailOutlineIcon />
               <NotificationsNoneIcon />
-              {userData?.photo && (
                 <Image
-                  src={userData.photo}
+                  src={user.photo}
                   width={70}
                   height={70}
                   alt='user'
                   className='rounded-full border-2 p-2'
                   style={{ objectFit: 'contain' }}
                 />
-              )}
             </div>
           ) : (
             <div className='space-x-10'>
-              <Button variant='contained' className='text-white' style={{ backgroundColor: '#2395FF' }}>
+              <Button variant='contained' onClick={() => router.push('/auth/register')} className='text-white' style={{ backgroundColor: '#2395FF' }}>
                 Sign Up
               </Button>
-              <Button variant='contained' className='text-white' style={{ backgroundColor: '#2395FF' }}>
+              <Button variant='contained' onClick={() => router.push('/auth/login')} className='text-white' style={{ backgroundColor: '#2395FF' }}>
                 Sign In
               </Button>
             </div>

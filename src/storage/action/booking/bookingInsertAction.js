@@ -10,11 +10,11 @@ export const BookingInsertAction = (data, token) => async (dispatch) => {
             "Authorization" : `Bearer ${token}`
         }
     })
-    dispatch({ type: "BOOKING_INSERT_SUCCESS", payload: data })
+    dispatch({ type: "BOOKING_INSERT_SUCCESS", payload: result })
   } catch (err) {
     dispatch({
       type: "BOOKING_INSERT_FAILED",
-      payload: err.response.data.message,
+      payload: err.message,
     });
   }
 };

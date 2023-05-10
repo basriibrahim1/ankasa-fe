@@ -7,6 +7,9 @@ import bookingPayloadReducer from "./booking/bookingPayloadReducer";
 import bookingInsertReducer from "./booking/bookingInsertReducer";
 import loginReducer from "./auth/login";
 import registerReducer from "./auth/register";
+import userPhotoReducer from "./user/userPhoto";
+import bookingIdReducer from "./booking/bookingIdReducer";
+import bookingUpdateReducer from "./booking/bookingUpdateReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,12 +18,15 @@ const rootReducer = combineReducers({
 
     userPayload: userPayloadReducer,
     userUpdate: userUpdateReducer,
+    userPhoto: userPhotoReducer,
 
     ticket: ticketReducer,
     ticketId: ticketIdReducer,
 
     bookingPayload: bookingPayloadReducer,
-    bookingInsert: bookingInsertReducer
+    bookingInsert: bookingInsertReducer,
+    bookingId: bookingIdReducer,
+    bookingUpdate: bookingUpdateReducer
 })
 
 

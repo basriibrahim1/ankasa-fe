@@ -1,10 +1,10 @@
 import { UserNavbar } from '@/component/navbar'
-import React from 'react'
-import paypal from '../../assets/pp.jpg'
-import mc from '../../assets/mc.png'
-import visa from '../../assets/visa.jpg'
-import stripe from '../../assets/stripe.png'
-import ae from '../../assets/ae.png'
+import React, { useEffect, useState } from 'react'
+import paypal from '../../../assets/pp.jpg'
+import mc from '../../../assets/mc.png'
+import visa from '../../../assets/visa.jpg'
+import stripe from '../../../assets/stripe.png'
+import ae from '../../../assets/ae.png'
 import Image from 'next/image'
 import { usePaymentInputs, PaymentInputsWrapper } from 'react-payment-inputs'
 import images from 'react-payment-inputs/images'
@@ -12,12 +12,18 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Button } from '@mui/material'
 import Footer from '@/component/footer'
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { BookingUpdateAction } from '@/storage/action/booking/bookingUpdateAction'
 
 const Payment = () => {
 
     const router = useRouter()
-    const data = useSelector(state => state.bookingInsert.data)
+    const {id} = router.query
+    const dispatch = useDispatch()
+
+    const total = useSelector(state => state.bookingId.data[0])
+    console.log(total)
 
     const {
         wrapperProps,
@@ -28,11 +34,16 @@ const Payment = () => {
       } = usePaymentInputs();
 
 
+      const updatePayment = () => {
+        dispatch(BookingUpdateAction(id)).then(router.push('/user/mypass'))
+      }
+
+
   return (
     <>
         <UserNavbar />
 
-
+        
         <div className='p-40 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF', height:'80vh'}}>
             <div className='w-full flex p-20' style={{backgroundColor:'white'}}>
                 <div className='w-3/6 '>
@@ -89,7 +100,7 @@ const Payment = () => {
                             </div>
                             <div className='flex justify-between items-center'>
                                 <h3>Flight amount</h3>
-                                <h3>${data.total},00</h3>
+                                <h3>${total.total},00</h3>
                             </div>
                         </div>
                         <div className='flex justify-between mt-5 font-medium text-md border-b-2 pb-3'>
@@ -97,13 +108,14 @@ const Payment = () => {
                                 <h3>Total Payment (USD)</h3>
                                 <p className='text-xs'>After 30 days $9.59</p>
                             </div>
-                            <h3>${data.total * 0.8 -2},00</h3>
+                            <h3>${total.total * 0.8 -2},00</h3>
                         </div>
-                        <Button color='info' className='px-10 py-3 font-semibold w-full' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Try it free for 30 Days</Button>
+                        <Button color='info' onClick={() => updatePayment()} className='px-10 py-3 font-semibold w-full' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Try it free for 30 Days</Button>
                     </div>
                 </div>
             </div>
         </div>
+
     <Footer/>
     </>
   )

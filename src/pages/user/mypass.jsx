@@ -4,29 +4,36 @@ import user from '../../assets/foto.png'
 import Image from 'next/image'
 import plane from '../../assets/plane.png'
 import { Button, Typography } from '@mui/material'
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import StarIcon from '@mui/icons-material/Star';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Footer from '@/component/footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import Link from 'next/link'
+import PaginationComponent from '@/component/pagination'
+import UserComponent from '@/component/userComponent'
+import { BookingIdAction } from '@/storage/action/booking/bookingIdAction'
 
 const myPass = () => {
 
     const dispatch = useDispatch()
     const [cookies, setCookies] = useCookies()
     const [isLoading, setIsLoading] = useState(false)
-    const [isLoadingUser, setIsLoadingUser] = useState(false)
     const [bookingData, setBookingData] = useState([])
-    const [user, setUser] = useState([])
-    console.log(user)
+   
     const router = useRouter()
+
+
+    const [page, setPage] = useState(1);
+
+    const itemsPerPage = 3;
+
+    const totalPages = Math.ceil(bookingData.length / itemsPerPage);
+
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
     
     useEffect(() => {
         setIsLoading(true);
@@ -45,86 +52,21 @@ const myPass = () => {
             });
     }, []);
 
-    useEffect(() => {
-        setIsLoadingUser(true);
-        axios.get(`${process.env.REACT_APP_BASE_URL}/users/myuser`, {
-            headers: {
-                "Authorization" : `Bearer ${cookies.token}`
-            }
-        })
-            .then(res => {
-                setUser(res.data.data);
-                setIsLoadingUser(false);
-            })
-            .catch(error => {
-                console.error(error);
-                setIsLoadingUser(false);
-            });
-    }, []);
+    const handleId = (id) => {
+        dispatch(BookingIdAction(id))
+    }
+
+    const handleIdSuccess = (id) => {
+        dispatch(BookingIdAction(id))
+    }
   
 
   return (
-    <>
+      <>
         <UserNavbar />
-
+        {cookies.token ? 
             <div className='p-20 mt-10 flex' style={{backgroundColor:'#F5F6FA'}}>
-                {isLoadingUser ? <div>Loading...</div> : user.map((item) => ( 
-                <div className='bg-white p-7 space-y-5 rounded-xl shadow-lg h-full mx-10' style={{width:'20%'}}>
-                    <div className='flex flex-col justify-center items-center space-y-3'>
-                        <Image src={item.photo} alt='user' width={100} height={100} className='p-2 border-2 rounded-full border-blue-500' style={{objectFit:'contain'}}/>
-                        <Button variant="outlined" color='info' component="label" style={{ textTransform: "none"}}>
-                           Select Photo
-                            <input hidden accept="image/*" type="file" />
-                        </Button>
-                        <h3 className='text-xl font-bold'>{item.name}</h3>
-                        <div className='flex flex-row items-center'>
-                            <LocationOnIcon className='text-md'/>
-                            <h3 className='text-sm ml-1' style={{color:'#979797'}}>{item.city}, {item.country}</h3>
-                        </div>
-                    </div>
-                    <div className='flex justify-between'>
-                        <h3 className='text-md font-semibold'>Cards</h3>
-                        <p className='text-blue-600 font-semibold'>+ Add</p>
-                    </div>
-                    <div className='bg-blue-500 p-4 rounded-lg text-white space-y-1 shadow-xl'>
-                        <p className='font-semibold'>4441 1235 5512 5551</p>
-                        <div className='flex justify-between text-sm'>
-                            <p>X Card</p>
-                            <p>$ 1,440.2</p>
-                        </div>
-                    </div>
-                    <div className='space-y-5 font-semibold' style={{color:'#979797'}}>
-                        <div className='flex justify-between'>
-                            <div className='space-x-5 flex'>
-                                <AccountCircleIcon/>
-                                <h3>Profile</h3>
-                            </div>
-                            <ArrowForwardIosIcon />
-                        </div>
-                        <div className='flex justify-between'>
-                            <div className='space-x-5 flex'>
-                                <StarIcon/>
-                                <h3>My Review</h3>
-                            </div>                          
-                            <ArrowForwardIosIcon />
-                        </div>
-                        <div className='flex justify-between'>
-                            <div className='space-x-5 flex'>
-                                <SettingsIcon/>
-                                <h3>Settings</h3>
-                            </div>
-                            <ArrowForwardIosIcon />
-                        </div>
-                        <div className='flex justify-between'>
-                            <div className='space-x-5 flex'>
-                            <LogoutIcon/>
-                            <h3>Logout</h3>
-                            </div>
-                            <ArrowForwardIosIcon />
-                        </div>
-                    </div>
-                </div>
-                    ))}
+                <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}}/>
 
                 <div className=' w-4/6 '>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
@@ -134,7 +76,7 @@ const myPass = () => {
                             <h3 className='font-semibold text-lg text-blue-500'>Order History</h3>
                         </div>
                     </div>
-                    {isLoading ? <div>Loading...</div> : bookingData.length <= 0 ? <div>Loading...</div> : bookingData.map((item) => (
+                    {isLoading ? <div>Loading...</div> : bookingData.length <= 0 ? <div>Loading...</div> : bookingData.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item) => (
                     <div className='bg-white rounded-xl shadow-lg p-7 space-y-3 mt-10' key={item.id}>
                         
                         <div className='border-b-2 space-y-3 pb-5'>
@@ -159,7 +101,12 @@ const myPass = () => {
                         <div className='flex justify-between items-center pt-5'>
                             <div className='flex space-x-10 items-center'>
                                 <h3 className='font-bold text-lg' style={{color:'#979797'}}>Status</h3>
-                                <h3 className='bg-orange-500 text-white p-3 rounded-lg'>{item.status}</h3>
+                                {item.status == 'Waiting for payment' ? <Link onClick={handleId(item.id)} href={`/home/payment/${item.id}`} className='bg-orange-500 text-white p-3 rounded-lg'>{item.status}</Link>
+                                : 
+                                <Link onClick={handleIdSuccess(item.id)} href={`/user/detailpass/${item.id}`} className='bg-yellow-300 text-white p-3 rounded-lg'>{item.status}</Link>
+                            }
+                                
+                                
                             </div>
                             <div className='flex space-x-2 text-blue-500 items-center'>
                                 <h3 className='font-semibold text-lg'>View Details</h3>
@@ -168,10 +115,13 @@ const myPass = () => {
                         </div>
                     </div>
                     ))}
+                    <div className='mt-10 flex justify-center items-center'>
+                        <PaginationComponent items={totalPages} page={page} handlePageChange={handlePageChange}/>
+                    </div>
                 </div>
 
         </div>
-    
+        : <Link href={"/auth/login"}>Login</Link>}
     <Footer/>
     </>
   )
