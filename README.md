@@ -1,7 +1,7 @@
 <h1 align="center">Ankasa Flight</h1>
 
 <p align="center">
-  <img height="150" src="https://github.com/basriibrahim1/pew-world-fe/blob/main/src/assets/logo.png"  />
+  <img height="150" src="https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/assets/logo.png"  />
 </p>
  <p align="center">
     Find Ticket to your world and flight with us.
