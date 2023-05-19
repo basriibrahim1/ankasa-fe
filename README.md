@@ -78,19 +78,19 @@ npm install
 
 |Register User Page| Login User Page | 
 | ------------ | ------------|
-![Register](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/register.PNG "Register Pekerja Page") | ![Login](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/login.PNG "Login Page")
+![Register](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/register.PNG "Register Pekerja Page") | ![Login](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/login.PNG "Login Page")
                                                                         
 | Landing Page | Home Page |
 | ------------- | ------------- |
-| ![Landing](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/home.PNG) |
+| ![Landing](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/home.PNG) |
 
 | Profile User | 
 | ------------- |
-| ![Profile](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/profile.PNG)
+| ![Profile](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/profile.PNG)
 
 | Booking | Payment |
 | ------------- | ------------- |
-| ![Booking](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/payment.PNG) |
+| ![Booking](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/payment.PNG) |
 
 
 ## Related Project
