@@ -17,7 +17,7 @@ export const UserNavbar = (props) => {
   const {value, setValue} = props
   const [cookies, setCookies] = useCookies()
   const [isLoading, setIsLoading] = useState(false)
-  const user = useSelector(state => state.userPayload.data[0])
+  const user = useSelector(state => state.login.data[0])
   const updated = useSelector(state => state.userUpdate.data)
   const router = useRouter()
 
@@ -50,7 +50,7 @@ export const UserNavbar = (props) => {
               <MailOutlineIcon />
               <NotificationsNoneIcon />
                 <Image
-                  src={user.photo}
+                  src={user?.photo}
                   width={70}
                   height={70}
                   alt='user'

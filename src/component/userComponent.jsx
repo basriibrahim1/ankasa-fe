@@ -52,7 +52,7 @@ const UserComponent = (props) => {
 
   return (
     <>
-        {isLoadingUser ? <div>Loading...</div> : user.map((item) => ( 
+        {!isLoadingUser && user.map((item) => ( 
                 <div className='bg-white p-7 space-y-5 rounded-xl shadow-lg h-full mx-10' style={{width:'20%'}} key={item.id}>
                     <div className='flex flex-col justify-center items-center space-y-3'>
                         <Image src={photoPreview ? photoPreview : item.photo} alt='user' width={100} height={100} className='p-2 border-2 rounded-full border-blue-500' style={{objectFit:'contain'}}/>
@@ -73,10 +73,10 @@ const UserComponent = (props) => {
                         <p className='text-blue-600 font-semibold'>+ Add</p>
                     </div>
                     <div className='bg-blue-500 p-4 rounded-lg text-white space-y-1 shadow-md'>
-                        <p className='font-semibold'>4441 1235 5512 5551</p>
+                        <p className='font-semibold'>4441 1235 5512 5552</p>
                         <div className='flex justify-between text-sm'>
                             <p>X Card</p>
-                            <p>$ 1,440.2</p>
+                            <p>$ 1,440.2 </p>
                         </div>
                     </div>
                     <div className='space-y-5 font-semibold'>

@@ -180,7 +180,7 @@ const Booking = () => {
                     />
                 </Box>
                 :
-                <Box sx={{display:'flex', flexDirection:'column'}}>
+                <div className='flex flex-col space-y-5'>
                     <TextField
                         required
                         label="Full name"
@@ -192,7 +192,7 @@ const Booking = () => {
                             style: {color:'#9B96AB'}}} 
                     />
                     <TextField
-                        className='mt-5'
+                        className='mt-20'
                         required
                         label="Email"
                         variant="standard"
@@ -202,7 +202,7 @@ const Booking = () => {
                         inputLabelProps={{
                             style: {color:'#9B96AB'}}} 
                     />
-                    </Box>
+                    </div>
                 }
 
                 <FormControl variant='standard' className='pb-3' color='primary' sx={{my:3}}>

@@ -98,7 +98,7 @@ const Profile = () => {
     <>
         <UserNavbar photo={updatePhoto}/>
             {cookies.token ? isLoading ? <div>Loading...</div> :
-            <div className='p-20 mt-10 flex' style={{backgroundColor:'#F5F6FA'}}>
+            <div className='p-20 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
                 <UserComponent profileColor={{ color: 'white', padding: 10, backgroundColor: 'cadetblue' }} photoPreview={photoPreview} handlePhoto={handlePhoto}/>
 
                 <div className=' w-4/6 '>
