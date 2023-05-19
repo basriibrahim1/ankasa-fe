@@ -82,7 +82,7 @@ npm install
                                                                         
 | Landing Page | Home Page |
 | ------------- | ------------- |
-| ![Landing](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/home.PNG) |
+| ![Landing](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/home.PNG) |
 
 | Profile User | 
 | ------------- |
@@ -90,7 +90,7 @@ npm install
 
 | Booking | Payment |
 | ------------- | ------------- |
-| ![Booking](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/payment.PNG) |
+| ![Booking](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/payment.PNG) |
 
 
 ## Related Project
