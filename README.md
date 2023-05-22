@@ -95,7 +95,7 @@ npm install
 
 ## Related Project
 
-- [`BACKEND Ankasa Flight`](https://github.com/basriibrahim1/ankasa-backend)
+- [`BACKEND Ankasa Flight`](https://github.com/basriibrahim1/ankasa-be)
 - [`FRONTEND Ankasa Flight`](https://github.com/basriibrahim1/ankasa-fe-next)
 
 
