@@ -9,6 +9,7 @@ const initialState = {
       case "USER_PAYLOAD_REQUEST":
         return {
           ...state,
+          data: null,
           isLoading: true,
           isError: null
         };
