@@ -18,6 +18,7 @@ import Facilities from '@/component/facilities';
 import Transit from '@/component/transit';
 import PaginationComponent from '@/component/pagination';
 import Layout from '@/component/layout';
+import { useCookies } from 'react-cookie';
 
 
 
@@ -38,6 +39,7 @@ const Main = ({data, error}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [searchValue, setSearchValue] = useState('')
     const [page, setPage] = useState(1);
+    const [cookies, setCookies] = useCookies()
 
     const itemsPerPage = 2;
 
@@ -148,7 +150,9 @@ const Main = ({data, error}) => {
                             <p> <span className='text-blue-500'>${item.price},00</span>/pax</p>
                         </div>
                         <div>
+                            {cookies.token &&
                             <Button onClick={() => handleDetail(item.id)} variant='contained' className='font-semibold rounded-lg tracking-wide' style={{backgroundColor:'#2395FF'}}>Select</Button>
+                        }
                         </div>
                     </div>
                     <div className='flex flex items-center mt-5 ml-7 pb-2 text-blue-500 font-semibold'>

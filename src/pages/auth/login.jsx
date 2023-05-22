@@ -52,9 +52,9 @@ const Login = () => {
                 </div>
                 <h2 className="mt-40 text-4xl font-bold tracking-wider">Login</h2>
                 <div className="flex flex-col mt-20 mb-20 space-y-5">
-                    <TextField value={email} onChange={(e) => setEmail(e.target.value)} id="Email" label="Email" variant="standard" type="email"/>
+                    <TextField value={email} onChange={(e) => setEmail(e.target.value)} id="Email" label="Email. Use this: kania@gmail.com" variant="standard" type="email"/>
                     <FormControl variant="standard" className="mt-5">
-                    <InputLabel htmlFor="password">Password</InputLabel>
+                    <InputLabel htmlFor="password">Password. 123</InputLabel>
                     <Input
                         id="password"
                         type={showPassword ? 'text' : 'password'}
