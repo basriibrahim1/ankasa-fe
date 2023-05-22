@@ -25,7 +25,7 @@ export const UserNavbar = (props) => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className='flex ml-10 justify-evenly items-center mt-5'>
+        <div className='flex ml-10 justify-between items-center mt-5'>
           <div className='flex'>
             <Image src={ankasa} height={50} width={50} style={{ transform: 'rotate(10deg)', objectFit: 'contain' }} alt='ankasa' />
             <h3 className='ml-4 text-3xl font-bold tracking-wide' style={{ color: '#414141' }}>
