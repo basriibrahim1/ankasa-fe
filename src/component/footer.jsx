@@ -12,19 +12,19 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className='mt-10'>
-        <div className='flex justify-around py-10'>
+    <div className='mt-20'>
+        <div className='flex justify-between x-10 py-10'>
             <div className='flex flex-col ml-40'>
                 <div className='flex items-center'>
                     <Image src={ankasa} alt='ankasa' className='w-20 h-10' style={{objectFit:'contain'}}/>
                     <h3 className='text-3xl font-bold text' style={{color:'#414141'}}>Ankasa</h3>
                 </div>
-                <h3 className='mt-10 w-3/5'>Find your Flight and explore the world with us. We will take care of the rest</h3>
+                <h3 className='mt-10 w-3/5 tracking-wider'>Find your Flight and explore the world with us. We will take care of the rest</h3>
             </div>
 
             <div className='flex flex-col'>
                 <h3 className='text-xl font-semibold text' style={{color:'#414141'}}>Features</h3>
-                <div className='space-y-2 mt-5' style={{color:'#414141'}}>
+                <div className='space-y-3 mt-5' style={{color:'#414141'}}>
                     <p>Find Ticket</p>
                     <p>My Booking</p>
                     <p>Chat</p>
@@ -35,8 +35,8 @@ const Footer = () => {
             <div className='flex flex-col items-center'>
                 <h3 className='text-xl font-semibold text' style={{color:'#414141'}}>Download Ankasa App</h3>
                 <div className='mt-5'>
-                    <Image className='w-40 h-15' style={{objectFit:'contain'}} src={apple} alt='apple'/>
-                    <Image className='w-40 h-16 mt-2' style={{objectFit:'contain'}} src={google} alt='google'/>
+                    <Image width={200} height={100} style={{objectFit:'contain'}} src={apple} alt='apple'/>
+                    <Image className='mt-2' width={200} height={100} style={{objectFit:'contain'}} src={google} alt='google'/>
                 </div>
             </div>
 
@@ -50,14 +50,14 @@ const Footer = () => {
                 </div>
             </div>
         </div>
-        <div className='flex justify-between mx-60 pb-5'>
-            <div className='flex space-x-2'>
+        <div className='flex mt-10 pb-5 justify-between'>
+            <div className='flex space-x-2 ml-40'>      
                 <CopyrightIcon />
-                <h3>Ankasa. All Rights Reserved</h3>
+                <h3 className='text-sm tracking-wider'>Ankasa. All Rights Reserved</h3>
             </div>
-            <div className='flex'>
-                <PlaceIcon />
-                <h3>Jakarta, Indonesia</h3>
+            <div className='flex me-40'>
+                <PlaceIcon/>
+                <h3 className='text-sm tracking-wider'>Jakarta, Indonesia</h3>
             </div>
         </div>
     </div>

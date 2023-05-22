@@ -15,7 +15,7 @@ export const userUpdateAction = (data, token) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: "USER_UPDATE_FAILED",
-      payload: err.response.data.message,
+      payload: err.message,
     });
   }
 };

@@ -11,12 +11,11 @@ export const userPayloadAction = (token) => async (dispatch) => {
         }
     })
     const user = result.data.data;
-    console.log(user)
     dispatch({ type: "USER_PAYLOAD_SUCCESS", payload: user })
   } catch (err) {
     dispatch({
       type: "USER_PAYLOAD_FAILED",
-      payload: err.response.data.message,
+      payload: err.message,
     });
   }
 };

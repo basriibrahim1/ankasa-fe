@@ -13,17 +13,25 @@ import { Button } from '@mui/material'
 import Footer from '@/component/footer'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BookingUpdateAction } from '@/storage/action/booking/bookingUpdateAction'
+import Layout from '@/component/layout'
 
 const Payment = () => {
 
     const router = useRouter()
     const {id} = router.query
     const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(true)
+    const [data,setData] = useState()
 
-    const total = useSelector(state => state.bookingId.data[0])
-    console.log(total)
+    useEffect(() => {
+            axios.get(`${process.env.REACT_APP_BASE_URL}/booking/${id}`)
+            .then(res => {
+                setData(res.data.data[0])
+                setIsLoading(false)
+    })
+    },[id])
 
     const {
         wrapperProps,
@@ -40,10 +48,9 @@ const Payment = () => {
 
 
   return (
-    <>
-        <UserNavbar />
+    <Layout>
 
-        
+        {!isLoading && 
         <div className='p-40 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF', height:'80vh'}}>
             <div className='w-full flex p-20' style={{backgroundColor:'white'}}>
                 <div className='w-3/6 '>
@@ -56,10 +63,10 @@ const Payment = () => {
                         <div className='flex justify-between items-center'>
                             <h3>Credit Card</h3>
                             <div className='flex'>
-                                <Image src={mc} className='w-10 h-8'style={{objectFit:'contain'}}/>
-                                <Image src={visa} className='w-10 h-8'style={{objectFit:'contain'}}/>
-                                <Image src={stripe} className='w-10 h-8'style={{objectFit:'contain'}}/>
-                                <Image src={ae} className='w-10 h-8'style={{objectFit:'contain'}}/>
+                                <Image src={mc} className='w-10 h-8'style={{objectFit:'contain'}} alt='mc'/>
+                                <Image src={visa} className='w-10 h-8'style={{objectFit:'contain'}} alt='visa'/>
+                                <Image src={stripe} className='w-10 h-8'style={{objectFit:'contain'}} alt='stripe'/>
+                                <Image src={ae} className='w-10 h-8'style={{objectFit:'contain'}} alt='ae'/>
                             </div>
                         </div>
                     </div> 
@@ -100,7 +107,7 @@ const Payment = () => {
                             </div>
                             <div className='flex justify-between items-center'>
                                 <h3>Flight amount</h3>
-                                <h3>${total.total},00</h3>
+                                <h3>${data.total},00</h3>
                             </div>
                         </div>
                         <div className='flex justify-between mt-5 font-medium text-md border-b-2 pb-3'>
@@ -108,16 +115,15 @@ const Payment = () => {
                                 <h3>Total Payment (USD)</h3>
                                 <p className='text-xs'>After 30 days $9.59</p>
                             </div>
-                            <h3>${total.total * 0.8 -2},00</h3>
+                            <h3>${data.total * 0.8 -2},00</h3>
                         </div>
                         <Button color='info' onClick={() => updatePayment()} className='px-10 py-3 font-semibold w-full' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Try it free for 30 Days</Button>
                     </div>
                 </div>
             </div>
         </div>
-
-    <Footer/>
-    </>
+    }
+    </Layout>
   )
 }
 

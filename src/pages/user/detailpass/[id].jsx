@@ -1,43 +1,42 @@
 import { UserNavbar } from '@/component/navbar'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import garuda from '../../../assets/garuda.png'
 import plane from '../../../assets/plane.png'
 import Footer from '@/component/footer'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Typography } from '@mui/material'
 import generateBarcode from '../../../../lib/generateBarcode'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
-import { BookingIdAction } from '@/storage/action/booking/bookingIdAction'
+import axios from 'axios'
+import Layout from '@/component/layout'
 
 const DetailPass = () => {
     const router = useRouter()
     const {id} = router.query
-    const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState(false)
-
-    const data = useSelector(state => state.bookingId.data[0])
+    const [isLoading, setIsLoading] = useState(true)
+    const [data, setData] = useState()
     console.log(data)
 
-    useEffect(() => {
-        generateBarcode('barcodeCanvas', `${data.id}`)
-    },[id])
 
     useEffect(() => {
         if(!data && id){ 
-            setIsLoading(true);
-            dispatch(BookingIdAction(id))
+            axios.get(`${process.env.REACT_APP_BASE_URL}/booking/${id}`)
             .then(res => {
+                setData(res.data.data[0])
+                
                 setIsLoading(false)
         })
     }
     },[id])
 
+    useEffect(() => {
+        if (data) {
+          generateBarcode('barcodeCanvas', `${data.id}`);
+        }
+      }, [data]);
 
   return (
-    <>
-        <UserNavbar />
+    <Layout>
 
     {isLoading ? <div>Loading...</div> : 
         <div className='p-40 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF', height:'100vh'}}>
@@ -94,8 +93,8 @@ const DetailPass = () => {
                 </div>
             </div>
        }
-    <Footer/>
-    </>
+
+    </Layout>
   )
 }
 

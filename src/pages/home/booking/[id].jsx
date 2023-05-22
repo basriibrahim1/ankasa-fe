@@ -14,6 +14,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { BookingInsertAction } from '@/storage/action/booking/bookingInsertAction';
 import { BookingIdAction } from '@/storage/action/booking/bookingIdAction';
+import Layout from '@/component/layout';
 
 
 const Booking = () => {
@@ -71,11 +72,9 @@ const Booking = () => {
         setChecked(event.target.checked);
     };
 
-    const insertId = useSelector(state => state.bookingInsert.data?.data?.id)
     
-    
-    const insertBooking = () => {
-        
+
+    const insertBooking = async () => {
         let data = {
             ticket_id : parseInt(id),
             fullname: fullname,
@@ -85,15 +84,19 @@ const Booking = () => {
             insurance: insuranceChecked,
             total: total.toString()
         }
-        dispatch(BookingInsertAction(data, cookies.token)).then(res => router.push(`/home/payment/${insertId}`))
-        dispatch(BookingIdAction(insertId))
+        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/booking`,data, {
+            headers: {
+                "Authorization" : `Bearer ${cookies.token}`
+            }
+        })
+        const getId = await result.data.id
+        router.push(`/home/payment/${getId}`)
     }
 
        
 
   return (
-    <>
-    <UserNavbar />
+    <Layout>
 
     <div className='p-10 mt-5 flex' style={{backgroundColor:'#F5F6FA'}}>
         <div className='flex flex-col w-4/6 ml-40 mr-5'>
@@ -282,8 +285,8 @@ const Booking = () => {
     </div>
 
 
-    <Footer />
-    </>
+
+    </Layout>
   )
 }
 

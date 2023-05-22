@@ -8,7 +8,7 @@ export const BookingIdAction = (id) => async (dispatch) => {
 
     const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/booking/${id}`)
     const booking = result.data.data;
-    dispatch({ type: "BOOKING_ID_SUCCESS", payload: booking })
+    dispatch({ type: "BOOKING_ID_SUCCESS", payload: booking[0] })
   } catch (err) {
     dispatch({
       type: "BOOKING_ID_FAILED",

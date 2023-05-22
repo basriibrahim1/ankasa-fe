@@ -9,7 +9,6 @@ import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import { loginAction } from "@/storage/action/login/login"
-// import Loading from "@/component/loading"
 
 
 const Login = () => {

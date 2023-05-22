@@ -19,7 +19,6 @@ const UserComponent = (props) => {
     const [user, setUser] = useState([])
     const updated = useSelector(state => state.userUpdate.data)
     const router = useRouter()
-    console.log(updated)
 
     useEffect(() => {
         {!user

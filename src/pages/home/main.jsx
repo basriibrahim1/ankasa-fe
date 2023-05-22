@@ -1,30 +1,11 @@
-import { UserNavbar } from '@/component/navbar'
 import React, { useEffect, useState } from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Box, Button, Checkbox, FormControlLabel, Pagination, Slider, Stack, TextField, Typography } from '@mui/material';
-import garuda from '../../assets/garuda.png'
-import asia from '../../assets/asia.png'
-import lion from '../../assets/lion.png'
 import Image from 'next/image';
 import plane from '../../assets/plane.png'
 import LuggageIcon from '@mui/icons-material/Luggage';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import WifiIcon from '@mui/icons-material/Wifi';
-import { Search } from '@mui/icons-material'
-import ankasa from '../../assets/ankasa.png'
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import PersonIcon from '@mui/icons-material/Person';
-import google from '../../assets/google.png'
-import apple from '../../assets/apple.png'
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import CopyrightIcon from '@mui/icons-material/Copyright';
-import PlaceIcon from '@mui/icons-material/Place';
-import { TicketAction } from '@/storage/action/ticket/ticketAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { TicketIdAction } from '@/storage/action/ticket/ticketIdAction';
@@ -35,20 +16,32 @@ import Arrived from '@/component/arrived';
 import Departure from '@/component/departure';
 import Facilities from '@/component/facilities';
 import Transit from '@/component/transit';
-import Footer from '@/component/footer';
 import PaginationComponent from '@/component/pagination';
+import Layout from '@/component/layout';
 
 
-const Main = () => {
 
+
+export const getServerSideProps = async () => {
+    try {
+        const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/ticket`)
+        const data = result.data.data
+        console.log(data)
+        return { props: {data}}
+    } catch (error) {
+        return { props: {error}}
+    }
+}
+
+
+const Main = ({data, error}) => {
     const [isLoading, setIsLoading] = useState(false)
-    const [ticketData, setTicketData] = useState([])
     const [searchValue, setSearchValue] = useState('')
     const [page, setPage] = useState(1);
 
     const itemsPerPage = 2;
 
-    const totalPages = Math.ceil(ticketData.length / itemsPerPage);
+    const totalPages = Math.ceil(data.length / itemsPerPage);
 
     const handlePageChange = (event, value) => {
         setPage(value);
@@ -64,46 +57,12 @@ const Main = () => {
         })
         .catch(err => console.log(err))
     }
-    
-    useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${process.env.REACT_APP_BASE_URL}/ticket?searchBy=to_country&search=${searchValue}`)
-            .then(res => {
-                setTicketData(res.data.data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-                setIsLoading(false);
-            });
-    }, [searchValue]);
+
 
   return (
-    <>
-
-        <UserNavbar value={searchValue} setValue={setSearchValue}/>
-
-        {/* <div className='flex ml-10 justify-evenly items-center mt-5'>
-                <div className="flex">
-                    <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'contain'}} alt='ankasa'/>
-                    <h3 className="ml-4 text-3xl font-bold tracking-wide" style={{color:'#414141'}}>Ankasa</h3>
-                </div>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end', marginBottom:2}}>
-                    <Search sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-                    <TextField className='w-96' id="input-with-sx" label="Search destination" variant="standard" />
-                </Box>
-                <div className='flex space-x-10 font-semibold text-lg'>
-                    <h3>Find Ticket</h3>
-                    <h3>My Booking</h3>
-                </div>
-                <div className='space-x-10 text-lg flex'>
-                    <MailOutlineIcon/>
-                    <NotificationsNoneIcon />
-                    <PersonIcon/>
-                </div>
-        </div>
-        */}
-        <div className='mt-10 p-10 flex' style={{backgroundColor:'#F5F6FA'}}>
+    isLoading ? <div>Loading..</div> : 
+   <Layout>
+        <main className='mt-10 p-10 flex' style={{backgroundColor:'#F5F6FA'}}>
             <div className='w-1/6 ml-40'>
                 <div className='flex justify-between'>
                     <h3 className='text-2xl font-semibold'>Filter</h3>
@@ -125,12 +84,12 @@ const Main = () => {
                     <div className='flex justify-between'>
                     <div className='flex items-center'>
                         <h3 className='text-2xl font-semibold'>Select Ticket</h3>
-                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>( {ticketData.length} flight found )</h3>
+                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>( {data.length} flight found )</h3>
                     </div>
                     <h3 className='text-md font-semibold text-blue-700 mt-1'>Sort by</h3>
                 </div>
 
-            {isLoading ? <div>Loading...</div> : ticketData.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, index) => { 
+            {isLoading ? <div>Loading...</div> : data.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, index) => { 
                     const depHours = parseInt(item.departure_time.split('.')[0]);
                     const depMinutes = parseInt(item.departure_time.split('.')[1]);
                     const arrHours = parseInt(item.time_arrived.split('.')[0]);
@@ -203,11 +162,9 @@ const Main = () => {
                     <PaginationComponent items={totalPages} page={page} handlePageChange={handlePageChange}/>
                 </div>
             </div>
-        </div>
+        </main>
         
-        <Footer />
-        
-    </>
+    </Layout>
   )
 }
 

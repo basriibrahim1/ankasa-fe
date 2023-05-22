@@ -11,6 +11,9 @@ export const loginAction = (data, setCookies, Router) => async (dispatch) => {
     setCookies("id", result.data.data.id, {
       path:'/'
   })
+  setCookies("photo", result.data.data.photo, {
+    path:'/'
+  })
     const users = result.data.data;
     dispatch({ type: "LOGIN_SUCCESS", payload: users },
     Router.push('/home/main')

@@ -14,6 +14,7 @@ import Link from 'next/link'
 import PaginationComponent from '@/component/pagination'
 import UserComponent from '@/component/userComponent'
 import { BookingIdAction } from '@/storage/action/booking/bookingIdAction'
+import Layout from '@/component/layout'
 
 const myPass = () => {
 
@@ -53,21 +54,21 @@ const myPass = () => {
     }, []);
 
     const handleId = (id) => {
-        dispatch(BookingIdAction(id))
+        router.push(`/home/payment/${id}`)
     }
 
     const handleIdSuccess = (id) => {
-        dispatch(BookingIdAction(id))
+        router.push(`/user/detailpass/${id}`)
     }
   
 
   return (
-      <>
-        <UserNavbar />
+      <Layout>
         {cookies.token ? 
-            <div className='p-20 mt-10 flex' style={{backgroundColor:'#F5F6FA'}}>
+            <div className='p-20 mt-10 flex mx-10' style={{backgroundColor:'#F5F6FA'}}>
+                {isLoading ? <div>Loading...</div> : 
                 <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}}/>
-
+            }
                 <div className=' w-4/6 '>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
                         <h3 className='tracking-widest text-blue-500 text-xl font-semibold'>MY BOOKING</h3>
@@ -101,12 +102,10 @@ const myPass = () => {
                         <div className='flex justify-between items-center pt-5'>
                             <div className='flex space-x-10 items-center'>
                                 <h3 className='font-bold text-lg' style={{color:'#979797'}}>Status</h3>
-                                {item.status == 'Waiting for payment' ? <Link onClick={handleId(item.id)} href={`/home/payment/${item.id}`} className='bg-orange-500 text-white p-3 rounded-lg'>{item.status}</Link>
+                                {item.status == 'Waiting for payment' ? <Button onClick={() => handleId(item.id)} color='primary' variant='contained'>{item.status}</Button>
                                 : 
-                                <Link onClick={handleIdSuccess(item.id)} href={`/user/detailpass/${item.id}`} className='bg-yellow-300 text-white p-3 rounded-lg'>{item.status}</Link>
-                            }
-                                
-                                
+                                <Button onClick={() => handleIdSuccess(item.id)} color='warning' variant='contained'>{item.status}</Button>
+                            }                                                            
                             </div>
                             <div className='flex space-x-2 text-blue-500 items-center'>
                                 <h3 className='font-semibold text-lg'>View Details</h3>
@@ -122,8 +121,7 @@ const myPass = () => {
 
         </div>
         : <Link href={"/auth/login"}>Login</Link>}
-    <Footer/>
-    </>
+    </Layout>
   )
 }
 

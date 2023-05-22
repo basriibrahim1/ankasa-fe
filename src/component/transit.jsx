@@ -7,8 +7,6 @@ const Transit = () => {
     
       const [transitVisible, setTransitVisible] = useState(false);
       const [transitState, setTransitState] = useState();
-
-      console.log(transitState)
     
       const handleTransitClick = () => {
         setTransitVisible(!transitVisible);

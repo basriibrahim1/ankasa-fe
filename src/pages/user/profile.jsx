@@ -1,4 +1,5 @@
 import Footer from '@/component/footer'
+import Layout from '@/component/layout'
 import { UserNavbar } from '@/component/navbar'
 import UserComponent from '@/component/userComponent'
 import { userPayloadAction } from '@/storage/action/user/userPayloadAction'
@@ -95,7 +96,7 @@ const Profile = () => {
 
 
   return (
-    <>
+    <Layout>
         <UserNavbar photo={updatePhoto}/>
             {cookies.token ? isLoading ? <div>Loading...</div> :
             <div className='p-20 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
@@ -125,7 +126,7 @@ const Profile = () => {
         </div>
             : router.push('auth/login') }
         <Footer/>
-    </>
+    </Layout>
   )
 }
 

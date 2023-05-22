@@ -13,14 +13,14 @@ import slide6 from '../assets/6.png'
 import { ArrowBackIosNew } from '@mui/icons-material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Footer from '@/component/footer';
+import Layout from '@/component/layout';
 
 
 
 export default function Home() {
   return (
-    <>
-        <UserNavbar />
-
+    <Layout>
+       
         <div className='mt-24 h-2/6'>
             <div className='flex justify-between w-full items-center'>
                 <div className='flex flex-col ml-40 space-y-6'>
@@ -74,8 +74,6 @@ export default function Home() {
                 </div>
             </div>
         </div>
-
-        <Footer />
-    </>
+    </Layout>
   )
 }
