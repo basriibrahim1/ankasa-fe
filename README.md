@@ -1,7 +1,7 @@
 <h1 align="center">Ankasa Flight</h1>
 
 <p align="center">
-  <img height="150" src="https://github.com/basriibrahim1/pew-world-fe/blob/main/src/assets/logo.png"  />
+  <img height="150" src="https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/assets/logo.png"  />
 </p>
  <p align="center">
     Find Ticket to your world and flight with us.
@@ -28,7 +28,7 @@
     </li>
     <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#related-project">Related Project</a></li>
-    <li><a href="#our-team">Our Team</a></li>
+    <li><a href="#author">Author</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -78,19 +78,19 @@ npm install
 
 |Register User Page| Login User Page | 
 | ------------ | ------------|
-![Register](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/register.PNG "Register Pekerja Page") | ![Login](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/login.PNG "Login Page")
+![Register](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/register.PNG "Register Pekerja Page") | ![Login](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/login.PNG "Login Page")
                                                                         
 | Landing Page | Home Page |
 | ------------- | ------------- |
-| ![Landing](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/home.PNG) |
+| ![Landing](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/landing.PNG) | ![home](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/home.PNG) |
 
 | Profile User | 
 | ------------- |
-| ![Profile](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/profile.PNG)
+| ![Profile](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/profile.PNG)
 
 | Booking | Payment |
 | ------------- | ------------- |
-| ![Booking](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/pew-world-fe/blob/main/src/ss/payment.PNG) |
+| ![Booking](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/booking.PNG) | ![Payment](https://github.com/basriibrahim1/ankasa-fe-next/blob/main/src/ss/payment.PNG) |
 
 
 ## Related Project
