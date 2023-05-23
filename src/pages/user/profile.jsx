@@ -97,7 +97,7 @@ const Profile = () => {
 
   return (
     <Layout>
-        <UserNavbar photo={updatePhoto}/>
+       
             {cookies.token ? isLoading ? <div>Loading...</div> :
             <div className='p-20 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
                 <UserComponent profileColor={{ color: 'white', padding: 10, backgroundColor: 'cadetblue' }} photoPreview={photoPreview} handlePhoto={handlePhoto}/>
@@ -125,7 +125,6 @@ const Profile = () => {
 
         </div>
             : router.push('auth/login') }
-        <Footer/>
     </Layout>
   )
 }
