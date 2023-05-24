@@ -10,50 +10,50 @@ const ImageSlider = () => {
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
       {
         id: 1,
         image: slider1,
-        city: 'Tokyo',
-        country: 'Japan',
+        city: 'tokyo',
+        country: 'japan',
         airlines: '15 Airlines'
       },
     ]
@@ -71,18 +71,8 @@ const ImageSlider = () => {
 
         <Carousel breakPoints={breakPoints}>
             {data.map((item, index) => (
-                <div className='flex flex-col' key={index}>
-                    <div className='bg-gray-400 inline-block px-3 py-2 absolute rounded-lg m-3 opacity-80 z-10'>
-                             <h3 className='text-white'>{item.airlines}</h3>
-                         </div>
+                <div className='relative flex flex-col' key={index}>
                          <Image src={item.image} width={200} height={200} className='rounded-lg relative' style={{background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'}}/>
-                         <div className='absolute flex items-center bottom-1 m-3 justify-between z-10 text-white'>
-                             <div>
-                                 <h3 className='text-xs'>{item.city}</h3>
-                                 <h3 className='font-bold tracking-wider'>{item.country}</h3>
-                             </div>
-                             <ArrowForwardIosIcon className='text-xs bg-gray-500 opacity-80 rounded-full p-1 ml-14'/>
-                    </div>
                 </div>
             ))}
         </Carousel>
