@@ -62,7 +62,7 @@ export const UserNavbar = (props) => {
                 <ListItemIcon>
                     <LockIcon />
                 </ListItemIcon>
-                <ListItemText primary='Login' />
+                <ListItemText primary='Login' onClick={() => router.push('/auth/login')} />
             </ListItemButton>
         </ListItem>
             <ListItem className='my-4 mx-10' disablePadding>
@@ -70,7 +70,7 @@ export const UserNavbar = (props) => {
                 <ListItemIcon>
                     <PersonAddIcon />
                 </ListItemIcon>
-                <ListItemText primary='Sign Up' />
+                <ListItemText primary='Sign Up' onClick={() => router.push('/auth/register')} />
             </ListItemButton>
         </ListItem>
       </List>

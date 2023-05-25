@@ -52,7 +52,7 @@ const UserComponent = (props) => {
   return (
     <>
         {!isLoadingUser && user.map((item) => ( 
-                <div className='bg-white p-7 space-y-5 rounded-xl shadow-lg h-full mx-10' style={{width:'20%'}} key={item.id}>
+                <div className='bg-white p-7 space-y-5 rounded-xl shadow-lg h-full mx-10' key={item.id}>
                     <div className='flex flex-col justify-center items-center space-y-3'>
                         <Image src={photoPreview ? photoPreview : item.photo} alt='user' width={100} height={100} className='p-2 border-2 rounded-full border-blue-500' style={{objectFit:'contain'}}/>
                         <Button variant="outlined" color='info' component="label" style={{ textTransform: "none"}}>

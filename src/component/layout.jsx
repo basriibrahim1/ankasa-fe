@@ -11,7 +11,7 @@ export default function Layout({ children }) {
             <title>Ankasa Flight</title>
         </Head>
       {children}
-      <Footer/>
+        <Footer/>
     </>
   );
 }

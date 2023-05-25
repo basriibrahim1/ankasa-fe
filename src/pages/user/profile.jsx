@@ -99,10 +99,13 @@ const Profile = () => {
     <Layout>
        
             {cookies.token ? isLoading ? <div>Loading...</div> :
-            <div className='p-20 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
-                <UserComponent profileColor={{ color: 'white', padding: 10, backgroundColor: 'cadetblue' }} photoPreview={photoPreview} handlePhoto={handlePhoto}/>
+            <div className='lg:p-20 p-5 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
+                 <div className='hidden md:flex'>
+                    <UserComponent profileColor={{ color: 'white', padding: 10, backgroundColor: 'cadetblue' }} photoPreview={photoPreview} handlePhoto={handlePhoto}/>
+                </div>
+                
 
-                <div className=' w-4/6 '>
+                <div className='lg:w-4/6 w-full'>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
                         <h3 className='tracking-widest text-blue-500 text-xl font-semibold'>Profile</h3>
                     </div>
@@ -111,7 +114,7 @@ const Profile = () => {
                         <TextField label='Name' placeholder='Name' value={updateData.name || ''} onChange={handleUpdateData('name')} />
                         <TextField label='Email' placeholder='Email' value={updateData.email || ''} onChange={handleUpdateData('email')} />
                         <TextField label='Address' placeholder='Address' value={updateData.address || ''} onChange={handleUpdateData('address')} />
-                        <div className='justify-between flex'>
+                        <div className='justify-between flex lg:flex-row flex-col lg:space-y-0 space-y-5'>
                             <TextField label='City' placeholder='City' value={updateData.city || ''} onChange={handleUpdateData('city')} />
                             <TextField label='Country' placeholder='Country' value={updateData.country || ''} onChange={handleUpdateData('country')} />
                             <TextField label='Postal Code' placeholder='Postal Code' value={updateData.postal_code || ''} onChange={handleUpdateData('postal_code')} />

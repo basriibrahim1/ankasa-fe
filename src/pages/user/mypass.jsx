@@ -65,11 +65,11 @@ const myPass = () => {
   return (
       <Layout>
         {cookies.token ? 
-            <div className='p-20 mt-10 flex mx-10' style={{backgroundColor:'#F5F6FA'}}>
-                {isLoading ? <div>Loading...</div> : 
-                <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}}/>
-            }
-                <div className=' w-4/6 '>
+            <div className='xl:p-20 md:p-10 p-2 mt-10 flex md:mx-10' style={{backgroundColor:'#F5F6FA'}}>
+                <div className='hidden md:flex'>
+                    <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}}/>
+                </div>
+                <div className=' xl:w-4/6 w-full mt-5 md:mt-0'>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
                         <h3 className='tracking-widest text-blue-500 text-xl font-semibold'>MY BOOKING</h3>
                         <div className='flex justify-between items-center'>
@@ -99,7 +99,7 @@ const myPass = () => {
                         </div>
                         
 
-                        <div className='flex justify-between items-center pt-5'>
+                        <div className='flex xl:flex-row flex-col justify-between xl:items-center pt-5'>
                             <div className='flex space-x-10 items-center'>
                                 <h3 className='font-bold text-lg' style={{color:'#979797'}}>Status</h3>
                                 {item.status == 'Waiting for payment' ? <Button onClick={() => handleId(item.id)} color='primary' variant='contained'>{item.status}</Button>
@@ -107,7 +107,7 @@ const myPass = () => {
                                 <Button onClick={() => handleIdSuccess(item.id)} color='warning' variant='contained'>{item.status}</Button>
                             }                                                            
                             </div>
-                            <div className='flex space-x-2 text-blue-500 items-center'>
+                            <div className='flex space-x-2 xl:mt-0 mt-5 text-blue-500 items-center'>
                                 <h3 className='font-semibold text-lg'>View Details</h3>
                                 <KeyboardArrowDownIcon/>
                             </div>

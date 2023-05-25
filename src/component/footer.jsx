@@ -12,8 +12,8 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <div className='mt-20'>
-        <div className='flex lg:flex-row flex-col lg:justify-around py-5 lg:py-10 w-full'>
+    <div className='mt-10'>
+        <div className='flex lg:flex-row flex-col lg:justify-around py-0 lg:py-10 w-full'>
             <div className='flex flex-col lg:ml-10 ml-5 lg:w-1/5'>
                 <div className='flex items-center'>
                     <Image src={ankasa} alt='ankasa' className='w-20 h-10' style={{objectFit:'contain'}}/>

@@ -6,7 +6,7 @@ import plane from '../../assets/plane.png'
 import LuggageIcon from '@mui/icons-material/Luggage';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import WifiIcon from '@mui/icons-material/Wifi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { TicketIdAction } from '@/storage/action/ticket/ticketIdAction';
 import axios from 'axios';
@@ -19,7 +19,7 @@ import Transit from '@/component/transit';
 import PaginationComponent from '@/component/pagination';
 import Layout from '@/component/layout';
 import { useCookies } from 'react-cookie';
-
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 
 
@@ -27,7 +27,6 @@ export const getServerSideProps = async () => {
     try {
         const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/ticket`)
         const data = result.data.data
-        console.log(data)
         return { props: {data}}
     } catch (error) {
         return { props: {error}}
@@ -60,17 +59,31 @@ const Main = ({data, error}) => {
         .catch(err => console.log(err))
     }
 
+    const [filterVisible, setFilterVisible] = useState(false);
+    
+      const handleFilterClick = () => {
+        setFilterVisible(!filterVisible);
+      }
+
 
   return (
     isLoading ? <div>Loading..</div> : 
    <Layout>
-        <main className='mt-10 p-10 flex' style={{backgroundColor:'#F5F6FA'}}>
-            <div className='w-1/6 ml-40'>
-                <div className='flex justify-between'>
-                    <h3 className='text-2xl font-semibold'>Filter</h3>
-                    <h3 className='text-md font-semibold text-blue-700 mt-1'>Reset</h3>
-                </div>
-                <div className=' mt-5 shadow-md bg-white p-8 space-y-5 rounded-lg'>
+        <main className='mt-10 md:p-10 p-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
+            <div className='xxl:ml-40'>
+                <div className='flex lg:justify-between items-center'>
+                    <h3 className='text-2xl font-semibold' onClick={() => handleFilterClick()}>Filter</h3>
+                    <h3 className='text-md lg:flex hidden font-semibold text-blue-700 mt-1'>Reset</h3>
+                    <div className='md:hidden'>
+                        {!filterVisible ? (
+                            <ArrowDropDownIcon onClick={() => handleFilterClick()} className='flex ml-2' />
+                        ) : (
+                            <ArrowDropUpIcon onClick={() => handleFilterClick()} className='flex ml-2' />
+                        )}
+                        </div>
+                    </div>
+               
+                <div className='mt-5 lg:flex flex-col hidden shadow-md bg-white p-8 space-y-5 rounded-lg'>
                     <Transit />
                     <Facilities />
                     <Departure />
@@ -78,15 +91,25 @@ const Main = ({data, error}) => {
                     <Airplane />
                     <TicketPrice />
                 </div>
+                {filterVisible &&
+                <div className='mt-5 md:hidden flex flex-col shadow-md bg-white p-8 space-y-5 rounded-lg'>
+                    <Transit />
+                    <Facilities />
+                    <Departure />
+                    <Arrived />
+                    <Airplane />
+                    <TicketPrice />
+                </div>
+                }
             </div>
 
 
 
-            <div className='w-4/6 mx-20 h-screen'>
-                    <div className='flex justify-between'>
+            <div className='lg:w-5/6 lg:ml-20 xl:h-screen lg:mt-0 mt-10'>
+                <div className='flex justify-between'>
                     <div className='flex items-center'>
                         <h3 className='text-2xl font-semibold'>Select Ticket</h3>
-                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>( {data.length} flight found )</h3>
+                        <h3 className='text-md ml-3 text-zinc-400 opacity-80 tracking-wide'>({data.length} flight found )</h3>
                     </div>
                     <h3 className='text-md font-semibold text-blue-700 mt-1'>Sort by</h3>
                 </div>
@@ -113,49 +136,62 @@ const Main = ({data, error}) => {
                         <Image src={item.photo} priority={true} alt='lion' width={100} height={100} style={{objectFit:'contain'}}/>
                         <h3 className='ml-5 tracking-wide text-lg font-medium' style={{color:'#595959'}}>{item.name}</h3>
                     </div>
-                    <div className='flex justify-between mx-7 mt-7 items-center'>
-                        <div className='flex space-x-10 w-5/12'>
+                    <div className='flex xl:justify-around xl:flex-row flex-col md:mx-7 mt-7 xl:items-center'>
+                        <div className='flex space-x-10 xl:w-2/6'>
                             <div className='text-center'>
                                 <h3 className='font-semibold text-3xl'>{item.from_country}</h3>
                                 <p className='tracking-wide text-sm' style={{color:'#595959'}}>{item.departure_time}</p>
                             </div>
-                            <div className='items-center justify-center mt-3'>
-                            <Image src={plane} alt='plane' className='w-5 h-5 items-center'/>
+                            <div className='lg:items-center xl:justify-center mt-3'>
+                                <Image src={plane} alt='plane' className='w-5 h-5 lg:items-center'/>
                             </div>
                             <div className='text-center'>
                                 <h3 className='font-semibold text-3xl'>{item.to_country}</h3>
                                 <p className='tracking-wide text-sm' style={{color:'#595959'}}>{item.time_arrived}</p>
                             </div>
                         </div>
-                        <div className='text-center'>
-                            <p className='font-semibold' style={{color:'#595959'}}>{duration}</p>
-                            <p className='tracking-wide text-sm' style={{color:'#595959'}}>
-                                {item.transit && (item.transit == 0 ? '( Direct )' : item.transit == 1 ? '( 1 Transit )' : '( Transit 2+ )')}
-                            </p>
-                        </div>
-                        {item.facilities && 
-                            <div className='space-x-3' style={{color:'#595959'}}>
-                                {item.facilities.split(',').map((facility) => {
-                                if (facility == 'luggage') {
-                                    return <LuggageIcon />;
-                                } else if (facility == 'meal') {
-                                    return <LunchDiningIcon />;
-                                } else if (facility == 'wifi') {
-                                    return <WifiIcon />;
-                                }
-                                })}
+                        
+                            <div className='xl:text-center xl:space-x-0 md:space-x-2 xl:mt-0 mt-5 flex xl:flex-col md:flex-row flex-col'>
+                                <p className='tracking-wide font-semibold text-lg xl:hidden flex'>Duration : </p>
+                                <div className='flex xxl:flex-row md:flex-col flex-row space-x-2 items-center'>
+                                    <p className='font-semibold' style={{color:'#595959'}}>{duration}</p>
+                                    <p className='tracking-wide text-sm' style={{color:'#595959'}}>
+                                        {item.transit && (item.transit == 0 ? '( Direct )' : item.transit == 1 ? '( 1 Transit )' : '( Transit 2+ )')}
+                                    </p>
+                                </div>
                             </div>
-                            }
-                        <div>
-                            <p> <span className='text-blue-500'>${item.price},00</span>/pax</p>
-                        </div>
-                        <div>
+
+
+                            <div className='flex items-center xl:mt-0 mt-7 space-x-2'>
+                                <p className='tracking-wide font-semibold text-lg xl:hidden flex'>Facility : </p>
+                                {item.facilities && 
+                                <div className='space-x-3' style={{color:'#595959'}}>
+                                    {item.facilities.split(',').map((facility) => {
+                                    if (facility == 'luggage') {
+                                        return <LuggageIcon />;
+                                    } else if (facility == 'meal') {
+                                        return <LunchDiningIcon />;
+                                    } else if (facility == 'wifi') {
+                                        return <WifiIcon />;
+                                    }
+                                    })}
+                                </div>
+                                }
+                            </div>
+                           
+
+                        
+                            <div className='xl:mt-0 mt-5 flex items-center space-x-2'>
+                                <p className='tracking-wide font-semibold text-lg xl:hidden flex'>Price : </p>
+                                <p> <span className='text-blue-500 '>${item.price},00</span>/pax</p>
+                            </div>
+                        <div className='xl:mt-0 mt-5'>
                             {cookies.token &&
                             <Button onClick={() => handleDetail(item.id)} variant='contained' className='font-semibold rounded-lg tracking-wide' style={{backgroundColor:'#2395FF'}}>Select</Button>
                         }
                         </div>
-                    </div>
-                    <div className='flex flex items-center mt-5 ml-7 pb-2 text-blue-500 font-semibold'>
+                     </div>
+                    <div className='flex flex items-center mt-5 md:ml-7 pb-2 text-blue-500 font-semibold'>
                         <h3>View Details</h3>
                         <ArrowDropDownIcon />
                     </div>
