@@ -70,7 +70,7 @@ const Main = ({data, error}) => {
     isLoading ? <div>Loading..</div> : 
    <Layout>
         <main className='mt-10 md:p-10 p-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
-            <div className='xxl:ml-40'>
+            <div className='xxl:ml-36 xl:w-1/6 lg:w-2/6'>
                 <div className='flex lg:justify-between items-center'>
                     <h3 className='text-2xl font-semibold' onClick={() => handleFilterClick()}>Filter</h3>
                     <h3 className='text-md lg:flex hidden font-semibold text-blue-700 mt-1'>Reset</h3>

@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
     <Provider store={store}>
         <PersistGate persistor={persistor}>
             <CookiesProvider>
-              <NextNProgress height={6} color='#2395FF'/>
+              <NextNProgress height={4} color='#2395FF'/>
                 <Component {...pageProps} />
             </CookiesProvider>
         </PersistGate>

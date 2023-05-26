@@ -42,15 +42,15 @@ const Login = () => {
   return (
     <>
         <div className="w-full h-screen flex">
-            <div className="w-3/5 container">
-                <Image src={logo} className="h-full" alt='logo'/>
+            <div className="md:w-4/5">
+                <Image src={logo} style={{objectFit:'cover'}} className="h-full md:flex hidden" alt='logo'/>
             </div>
-            <div className="flex flex-col w-2/5 mx-16">
-                <div className="flex items-center mt-20">
-                    <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'cover'}} alt='ankasa'/>
+            <div className="flex flex-col md:w-2/5 md:mx-16 justify-center md:justify-start md:items-start items-center w-full mx-5">
+                <div className="flex items-center mt-20 mr-28 md:mr-0">
+                    <Image src={ankasa} height={50} width={50} style={{transform: 'rotate(10deg)', objectFit:'contain'}} alt='ankasa'/>
                     <h3 className="ml-4 text-3xl font-bold tracking-wide" style={{color:'#414141'}}>Ankasa</h3>
                 </div>
-                <h2 className="mt-40 text-4xl font-bold tracking-wider">Login</h2>
+                <h2 className="lg:mt-40 md:mr-0 mr-44 mt-10 text-4xl font-bold tracking-wider">Login</h2>
                 <div className="flex flex-col mt-20 mb-20 space-y-5">
                     <TextField value={email} onChange={(e) => setEmail(e.target.value)} id="Email" label="Email. Use this: kania@gmail.com" variant="standard" type="email"/>
                     <FormControl variant="standard" className="mt-5">

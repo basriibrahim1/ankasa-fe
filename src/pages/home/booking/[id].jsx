@@ -98,8 +98,49 @@ const Booking = () => {
   return (
     <Layout>
 
-    <div className='p-10 mt-5 flex' style={{backgroundColor:'#F5F6FA'}}>
-        <div className='flex flex-col w-4/6 ml-40 mr-5'>
+    <div className='p-10 mt-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
+        <div className='lg:hidden flex flex-col mr-5'>
+            <h3 className='text-2xl font-semibold'>Flight Details</h3>
+            {isLoading ? <div>Loading...</div> : data && data.map(item => (
+            <div className='flex flex-col bg-white mt-5 rounded-lg shadow-md'>
+                <div className='space-y-5 border-b-2 p-7'>
+                    <div className='flex items-center mt-2'>
+                        <Image src={item.photo} alt='lion' width={100} height={100} style={{objectFit:'contain'}}/>
+                        <h3 className='ml-5 tracking-wide text-lg font-medium' style={{color:'#595959'}}>{item.name}</h3>
+                    </div>
+                    <div className='flex space-x-10'>
+                            <h3 className='font-semibold text-xl'>{item.from_country}</h3>
+                            <Image src={plane} alt='plane' className='w-5 items-center'/>
+                            <h3 className='font-semibold text-xl'>{item.to_country}</h3>
+                    </div>
+                    <div className='flex items-center space-x-5 text-sm' style={{color:'#6B6B6B'}}>
+                        <p>{item.schedule_time}</p>
+                        <Typography>-</Typography>             
+                        <p>{item.departure_time} - {item.time_arrived}</p>
+                    </div>
+                    <div className='space-y-3'>
+                        <div className='flex items-center space-x-2' style={{color:'#2395FF'}}>
+                            <CheckCircleOutlineIcon/>
+                            <p>Refundable</p>
+                        </div>
+                        <div className='flex items-center space-x-2' style={{color:'#2395FF'}}>
+                            <CheckCircleOutlineIcon/>
+                            <p>Can Reschedule</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex p-7 justify-between font-bold text-lg'>
+                    <h3 className=''>Total Payment</h3>
+                    <div className='flex items-center' style={{color:'#2395FF'}}>
+                        <h3>{insuranceChecked ? parseInt(item.price) + 2 : item.price},00</h3>
+                        <KeyboardArrowDownIcon />
+                    </div>
+                </div>
+            </div>
+        ))}
+        </div>
+
+        <div className='flex flex-col lg:w-4/6 xxl:ml-40 mr-5 lg:mt-0 mt-10'>
             <div>
                 <div>
                     <h3 className='text-2xl font-semibold'>Contact Person Details</h3>
@@ -140,7 +181,7 @@ const Booking = () => {
                 <h3 className='text-2xl font-semibold'>Passenger Details</h3>
             </div>
             <div className='flex flex-col space-y-10 bg-white p-10 mt-5 rounded-lg shadow-md'>
-                <div className='bg-blue-100 flex items-center rounded-lg p-3 justify-between '>
+                <div className='bg-blue-100 flex lg:flex-row flex-col lg:items-center rounded-lg p-3 justify-between '>
                     <h3 className='font-medium text-sm' style={{color:'#595959'}}>Passenger 1 Adult</h3>
                     <div className='flex space-x-2 items-center text-sm'>
                         <h3 className='font-medium text-sm' style={{color:'#595959'}}>Same as contact person</h3>
@@ -242,7 +283,7 @@ const Booking = () => {
         </div>
 
 
-        <div className='w-2/6 ml-20 mr-40'>
+        <div className='lg:flex hidden w-2/6 flex-col xl:ml-20 ml-10 xxl:mr-40'>
             <h3 className='text-2xl font-semibold'>Flight Details</h3>
             {isLoading ? <div>Loading...</div> : data && data.map(item => (
             <div className='flex flex-col bg-white mt-5 rounded-lg shadow-md'>

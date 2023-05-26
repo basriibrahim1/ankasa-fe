@@ -51,9 +51,9 @@ const Payment = () => {
     <Layout>
 
         {!isLoading && 
-        <div className='p-40 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF', height:'80vh'}}>
-            <div className='w-full flex p-20' style={{backgroundColor:'white'}}>
-                <div className='w-3/6 '>
+        <div className='xxl:p-40 md:p-20 py-3 px-2 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF'}}>
+            <div className='w-full flex lg:flex-row flex-col md:p-20 py-20' style={{backgroundColor:'white'}}>
+                <div className='lg:w-3/6 lg:mx-0 md:mx-5 mx-2'>
                     <h3 className='font-semibold text-xl'>Payment Method</h3>
                     <div className='bg-zinc-100 py-3 px-4 space-y-3 mt-5 font-medium text-sm'>
                         <div className='flex justify-between items-center'>
@@ -86,7 +86,7 @@ const Payment = () => {
                     </div>
 
                 </div>
-                <div className='w-3/6  mx-20'>
+                <div className='lg:w-3/6 lg:mt-0 mt-10 xl:mx-20 md:mx-5 mx-2'>
                     <h3 className='font-semibold text-xl'>Summary</h3>
                     <div className='space-y-5'>
                         <div className='flex justify-between mt-5 font-medium text-sm border-b-2 pb-3'>

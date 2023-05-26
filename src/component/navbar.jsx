@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useRouter } from 'next/router';
+import { Search } from '@mui/icons-material';
 
 export const UserNavbar = (props) => {
   const { value, setValue } = props;
@@ -46,12 +47,17 @@ export const UserNavbar = (props) => {
         </ListItem>
         <ListItem className=' mx-5' disablePadding>
             <ListItemButton>
-                <ListItemText primary='Find Ticket' />
+                <ListItemText primary='Find Ticket' onClick={() => router.push('/home/main')} />
                 </ListItemButton>
             </ListItem>
         <ListItem className=' mx-5' disablePadding>
             <ListItemButton>
-            <ListItemText primary='My Booking' />
+            <ListItemText primary='My Booking' onClick={() => router.push('/user/mypass')}/>
+            </ListItemButton>
+        </ListItem>
+        <ListItem className=' mx-5' disablePadding>
+            <ListItemButton>
+            <ListItemText primary='Edit Profile' onClick={() => router.push('/user/profile')}/>
             </ListItemButton>
         </ListItem>
       </List>
@@ -80,18 +86,24 @@ export const UserNavbar = (props) => {
 
   return (
     <div className='flex ml-10 md:justify-around justify-between items-center mt-5'>
-      <div className='flex'>
+      <div className='flex' onClick={() => router.push('/home/main')}>
         <Image
           src={ankasa}
           height={50}
+          className='hover:cursor-pointer'
           width={50}
           style={{ transform: 'rotate(10deg)', objectFit: 'contain' }}
           alt='ankasa'
         />
-        <h3 className='ml-4 text-3xl font-bold tracking-wide' style={{ color: '#414141' }}>
+        <h3 className='ml-4 text-3xl font-bold tracking-wide hover:cursor-pointer' style={{ color: '#414141' }}>
           Ankasa
         </h3>
       </div>
+
+      <Box sx={{ display: 'flex', alignItems: 'flex-end', marginBottom: 2 }}>
+            <Search sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+            <TextField className='lg:w-96 w-36' id='input-with-sx' label='Search destination' variant='standard' value={value} onChange={(e) => setValue(e.target.value)}/>
+          </Box>
 
       {/* Desktop Menu */}
       <div className='hidden md:flex space-x-10 font-semibold text-lg'>
