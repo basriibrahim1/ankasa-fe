@@ -108,12 +108,12 @@ export const UserNavbar = (props) => {
       {/* Desktop Menu */}
       {cookies.token && 
       <div className='hidden md:flex space-x-10 font-semibold text-lg'>
-        <Link href='/home/main' passHref>
+        <Link href='/home/main'>
           <Button component='a' color='primary' underline='hover'>
             Find Ticket
           </Button>
         </Link>
-        <Link href='/user/mypass' passHref>
+        <Link href='/user/mypass'>
           <Button component='a' color='primary' underline='hover'>
             My Booking
           </Button>

@@ -72,7 +72,7 @@ const ImageSlider = () => {
         <Carousel breakPoints={breakPoints}>
             {data.map((item, index) => (
                 <div className='relative flex flex-col' key={index}>
-                         <Image src={item.image} width={200} height={200} className='rounded-lg relative' style={{background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'}}/>
+                    <Image src={item.image} width={200} height={200} className='rounded-lg relative' style={{background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%)'}}/>
                 </div>
             ))}
         </Carousel>

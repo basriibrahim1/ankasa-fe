@@ -40,7 +40,7 @@ const DetailPass = () => {
 
     {isLoading ? <div>Loading...</div> : 
         <div className='w-full md:p-20 p-2 mt-10 items-center justify-center' style={{backgroundColor:'#2395FF'}}>
-            <div className='flex flex-col xl:p-20 p-2 py-10 flex rounded-xl' style={{backgroundColor:'white'}}>
+            <div className='flex flex-col xl:p-20 p-2 py-10 rounded-xl' style={{backgroundColor:'white'}}>
                 <div className='flex items-center xl:justify-between justify-around'>
                     <h3 className='text-3xl font-bold'>Booking Pass</h3>
                     <MoreVertIcon color='info' className='text-3xl'/>

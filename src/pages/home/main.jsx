@@ -191,7 +191,7 @@ const Main = ({data, error}) => {
                         }
                         </div>
                      </div>
-                    <div className='flex flex items-center mt-5 md:ml-7 pb-2 text-blue-500 font-semibold'>
+                    <div className='flex items-center mt-5 md:ml-7 pb-2 text-blue-500 font-semibold'>
                         <h3>View Details</h3>
                         <ArrowDropDownIcon />
                     </div>
