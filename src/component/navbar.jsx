@@ -106,6 +106,7 @@ export const UserNavbar = (props) => {
           </Box>
 
       {/* Desktop Menu */}
+      {cookies.token && 
       <div className='hidden md:flex space-x-10 font-semibold text-lg'>
         <Link href='/home/main' passHref>
           <Button component='a' color='primary' underline='hover'>
@@ -118,6 +119,7 @@ export const UserNavbar = (props) => {
           </Button>
         </Link>
       </div>
+      }
 
       {/* User Actions */}
       {cookies.token ? (
