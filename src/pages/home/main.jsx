@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { Box, Button, Checkbox, FormControlLabel, Pagination, Slider, Stack, TextField, Typography } from '@mui/material';
+import {Button,} from '@mui/material';
 import Image from 'next/image';
 import plane from '../../assets/plane.png'
 import LuggageIcon from '@mui/icons-material/Luggage';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import WifiIcon from '@mui/icons-material/Wifi';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { TicketIdAction } from '@/storage/action/ticket/ticketIdAction';
 import axios from 'axios';
 import TicketPrice from '@/component/ticketPrice';
 import Airplane from '@/component/airplane';
@@ -20,6 +18,7 @@ import PaginationComponent from '@/component/pagination';
 import Layout from '@/component/layout';
 import { useCookies } from 'react-cookie';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ButtonId } from '@/component/button';
 
 
 
@@ -48,16 +47,7 @@ const Main = ({data, error}) => {
         setPage(value);
     };
     
-    const dispatch = useDispatch()
     const router = useRouter()
-
-    const handleDetail = (id) => {
-        dispatch(TicketIdAction(id))
-        .then(res => {
-            router.push(`/home/booking/${id}`)
-        })
-        .catch(err => console.log(err))
-    }
 
     const [filterVisible, setFilterVisible] = useState(false);
     
@@ -187,7 +177,7 @@ const Main = ({data, error}) => {
                             </div>
                         <div className='xl:mt-0 mt-5'>
                             {cookies.token &&
-                            <Button onClick={() => handleDetail(item.id)} variant='contained' className='font-semibold rounded-lg tracking-wide' style={{backgroundColor:'#2395FF'}}>Select</Button>
+                            <ButtonId href='/home/booking' id={item.id} text='Select'/>
                         }
                         </div>
                      </div>

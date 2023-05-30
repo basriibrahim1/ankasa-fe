@@ -1,4 +1,3 @@
-import { UserNavbar } from '@/component/navbar'
 import React, { useEffect, useState } from 'react'
 import paypal from '../../../assets/pp.jpg'
 import mc from '../../../assets/mc.png'
@@ -10,7 +9,6 @@ import { usePaymentInputs, PaymentInputsWrapper } from 'react-payment-inputs'
 import images from 'react-payment-inputs/images'
 import LockIcon from '@mui/icons-material/Lock';
 import { Button } from '@mui/material'
-import Footer from '@/component/footer'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
