@@ -1,11 +1,9 @@
-import { UserNavbar } from '@/component/navbar'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import plane from '../../../assets/plane.png'
-import Footer from '@/component/footer'
+import plane from '../../assets/plane.png'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Typography } from '@mui/material'
-import generateBarcode from '../../../../lib/generateBarcode'
+import generateBarcode from '../../../lib/generateBarcode'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Layout from '@/component/layout'

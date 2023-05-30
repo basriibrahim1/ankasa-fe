@@ -1,25 +1,16 @@
 import React, {useState } from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import {Button,} from '@mui/material';
 import Image from 'next/image';
 import plane from '../../assets/plane.png'
 import LuggageIcon from '@mui/icons-material/Luggage';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import WifiIcon from '@mui/icons-material/Wifi';
-import { useRouter } from 'next/router';
 import axios from 'axios';
-import TicketPrice from '@/component/ticketPrice';
-import Airplane from '@/component/airplane';
-import Arrived from '@/component/arrived';
-import Departure from '@/component/departure';
-import Facilities from '@/component/facilities';
-import Transit from '@/component/transit';
 import PaginationComponent from '@/component/pagination';
 import Layout from '@/component/layout';
 import { useCookies } from 'react-cookie';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { ButtonId } from '@/component/button';
-
+import { Filter } from './filter';
 
 
 export const getServerSideProps = async () => {
@@ -34,8 +25,6 @@ export const getServerSideProps = async () => {
 
 
 const Main = ({data, error}) => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [searchValue, setSearchValue] = useState('')
     const [page, setPage] = useState(1);
     const [cookies, setCookies] = useCookies()
 
@@ -46,56 +35,18 @@ const Main = ({data, error}) => {
     const handlePageChange = (event, value) => {
         setPage(value);
     };
-    
-    const router = useRouter()
-
-    const [filterVisible, setFilterVisible] = useState(false);
-    
-      const handleFilterClick = () => {
-        setFilterVisible(!filterVisible);
-      }
 
 
   return (
-    isLoading ? <div>Loading..</div> : 
-   <Layout>
-        <main className='mt-10 md:p-10 p-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
-            <div className='xxl:ml-36 xl:w-1/6 lg:w-2/6'>
-                <div className='flex lg:justify-between items-center'>
-                    <h3 className='text-2xl font-semibold' onClick={() => handleFilterClick()}>Filter</h3>
-                    <h3 className='text-md lg:flex hidden font-semibold text-blue-700 mt-1'>Reset</h3>
-                    <div className='md:hidden'>
-                        {!filterVisible ? (
-                            <ArrowDropDownIcon onClick={() => handleFilterClick()} className='flex ml-2' />
-                        ) : (
-                            <ArrowDropUpIcon onClick={() => handleFilterClick()} className='flex ml-2' />
-                        )}
-                        </div>
-                    </div>
-               
-                <div className='mt-5 lg:flex flex-col hidden shadow-md bg-white p-8 space-y-5 rounded-lg'>
-                    <Transit />
-                    <Facilities />
-                    <Departure />
-                    <Arrived />
-                    <Airplane />
-                    <TicketPrice />
+    <>
+        {!data ? <div>Loading..</div> : 
+            <Layout>
+                <main className='mt-10 md:p-10 p-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
+                <div className='xxl:ml-36 xl:w-1/6 lg:w-2/6'>
+                    <Filter />
                 </div>
-                {filterVisible &&
-                <div className='mt-5 md:hidden flex flex-col shadow-md bg-white p-8 space-y-5 rounded-lg'>
-                    <Transit />
-                    <Facilities />
-                    <Departure />
-                    <Arrived />
-                    <Airplane />
-                    <TicketPrice />
-                </div>
-                }
-            </div>
 
-
-
-            <div className='lg:w-5/6 lg:ml-20 xl:h-screen lg:mt-0 mt-10'>
+                <div className='lg:w-5/6 lg:ml-20 xl:h-screen lg:mt-0 mt-10'>
                 <div className='flex justify-between'>
                     <div className='flex items-center'>
                         <h3 className='text-2xl font-semibold'>Select Ticket</h3>
@@ -104,7 +55,7 @@ const Main = ({data, error}) => {
                     <h3 className='text-md font-semibold text-blue-700 mt-1'>Sort by</h3>
                 </div>
 
-            {isLoading ? <div>Loading...</div> : data.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, index) => { 
+            {!data ? <div>Loading...</div> : data.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item, index) => { 
                     const depHours = parseInt(item.departure_time.split('.')[0]);
                     const depMinutes = parseInt(item.departure_time.split('.')[1]);
                     const arrHours = parseInt(item.time_arrived.split('.')[0]);
@@ -168,8 +119,6 @@ const Main = ({data, error}) => {
                                 </div>
                                 }
                             </div>
-                           
-
                         
                             <div className='xl:mt-0 mt-5 flex items-center space-x-2'>
                                 <p className='tracking-wide font-semibold text-lg xl:hidden flex'>Price : </p>
@@ -177,7 +126,7 @@ const Main = ({data, error}) => {
                             </div>
                         <div className='xl:mt-0 mt-5'>
                             {cookies.token &&
-                            <ButtonId href='/home/booking' id={item.id} text='Select'/>
+                            <ButtonId href='/booking' id={item.id} text='Select'/>
                         }
                         </div>
                      </div>
@@ -193,8 +142,9 @@ const Main = ({data, error}) => {
                 </div>
             </div>
         </main>
-        
-    </Layout>
+     </Layout>
+    }
+    </>
   )
 }
 

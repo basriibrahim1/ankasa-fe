@@ -1,19 +1,15 @@
-import { UserNavbar } from '@/component/navbar'
 import React, { useEffect, useState } from 'react'
-import user from '../../assets/foto.png'
 import Image from 'next/image'
 import plane from '../../assets/plane.png'
-import { Button, Typography } from '@mui/material'
+import { Button, Skeleton, Typography } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Footer from '@/component/footer'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Link from 'next/link'
 import PaginationComponent from '@/component/pagination'
 import UserComponent from '@/component/userComponent'
-import { BookingIdAction } from '@/storage/action/booking/bookingIdAction'
 import Layout from '@/component/layout'
 
 const myPass = () => {
@@ -53,12 +49,13 @@ const myPass = () => {
             });
     }, []);
 
+
     const handleId = (id) => {
-        router.push(`/home/payment/${id}`)
+        router.push(`/payment/${id}`)
     }
 
     const handleIdSuccess = (id) => {
-        router.push(`/user/detailpass/${id}`)
+        router.push(`/detailpass/${id}`)
     }
   
 
@@ -66,10 +63,12 @@ const myPass = () => {
       <Layout>
         {cookies.token ? 
             <div className='xl:p-20 md:p-10 p-2 mt-10 flex md:mx-10' style={{backgroundColor:'#F5F6FA'}}>
-                <div className='hidden md:flex'>
-                    <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}}/>
+                <div className='hidden md:flex w-2/6'>
+                    {isLoading ? <Skeleton variant="rectangular" className='p-7 mx-10' width={350} height={500} animation='wave'/> : 
+                    <UserComponent profileColor={{color:'#979797', padding:10, backgroundColor:'white'}} />
+                    }
                 </div>
-                <div className=' xl:w-4/6 w-full mt-5 md:mt-0'>
+                <div className='xxl:w-4/6 w-full mt-5 md:mt-0'>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
                         <h3 className='tracking-widest text-blue-500 text-xl font-semibold'>MY BOOKING</h3>
                         <div className='flex justify-between items-center'>
@@ -77,7 +76,7 @@ const myPass = () => {
                             <h3 className='font-semibold text-lg text-blue-500'>Order History</h3>
                         </div>
                     </div>
-                    {isLoading ? <div>Loading...</div> : bookingData.length <= 0 ? <div>Loading...</div> : bookingData.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item) => (
+                    {isLoading ? <Skeleton variant="rectangular" className='mt-5 w-full' height={1000} animation='wave'/> : bookingData.length <= 0 ? <Skeleton variant="rectangular" width={210} height={60} /> : bookingData.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((item) => (
                     <div className='bg-white rounded-xl shadow-lg p-7 space-y-3 mt-10' key={item.id}>
                         
                         <div className='border-b-2 space-y-3 pb-5'>
@@ -120,7 +119,8 @@ const myPass = () => {
                 </div>
 
         </div>
-        : <Link href={"/auth/login"}>Login</Link>}
+        : router.push('/login')
+     }
     </Layout>
   )
 }

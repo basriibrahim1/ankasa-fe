@@ -16,7 +16,7 @@ export const loginAction = (data, setCookies, Router) => async (dispatch) => {
   })
     const users = result.data.data;
     dispatch({ type: "LOGIN_SUCCESS", payload: users },
-    Router.push('/home/main')
+    Router.push('/home')
     );
   } catch (err) {
     dispatch({

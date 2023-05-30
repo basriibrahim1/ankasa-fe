@@ -1,20 +1,16 @@
-import { UserNavbar } from '@/component/navbar'
-import { Alert, Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField, Typography, makeStyles } from '@mui/material'
+import { Alert, Box, Button, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Skeleton, Switch, TextField, Typography, makeStyles } from '@mui/material'
 import { MuiTelInput } from 'mui-tel-input'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
-import plane from '../../../assets/plane.png'
-import garuda from '../../../assets/garuda.png'
+import plane from '../../assets/plane.png'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Footer from '@/component/footer';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { BookingInsertAction } from '@/storage/action/booking/bookingInsertAction';
-import { BookingIdAction } from '@/storage/action/booking/bookingIdAction';
 import Layout from '@/component/layout';
+import { ButtonInsert } from '@/component/button';
 
 
 const Booking = () => {
@@ -84,13 +80,17 @@ const Booking = () => {
             insurance: insuranceChecked,
             total: total.toString()
         }
-        const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/booking`,data, {
-            headers: {
-                "Authorization" : `Bearer ${cookies.token}`
-            }
-        })
-        const getId = await result.data.id
-        router.push(`/home/payment/${getId}`)
+        try {
+            const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/booking`, data, {
+              headers: {
+                "Authorization": `Bearer ${cookies.token}`
+              }
+            });
+        
+            router.push(`/payment/${result.data.id}`);
+          } catch (error) {
+            console.error(error);
+          }
     }
 
        
@@ -101,7 +101,7 @@ const Booking = () => {
     <div className='p-10 mt-5 flex lg:flex-row flex-col' style={{backgroundColor:'#F5F6FA'}}>
         <div className='lg:hidden flex flex-col mr-5'>
             <h3 className='text-2xl font-semibold'>Flight Details</h3>
-            {isLoading ? <div>Loading...</div> : data && data.map(item => (
+            {isLoading ? <Skeleton variant="rectangular" width={210} height={60} /> : data && data.map(item => (
             <div className='flex flex-col bg-white mt-5 rounded-lg shadow-md'>
                 <div className='space-y-5 border-b-2 p-7'>
                     <div className='flex items-center mt-2'>
@@ -140,12 +140,12 @@ const Booking = () => {
         ))}
         </div>
 
-        <div className='flex flex-col lg:w-4/6 xxl:ml-40 mr-5 lg:mt-0 mt-10'>
+        <div className='flex flex-col lg:w-4/6 xl:ml-40 mr-5 lg:mt-0 mt-10'>
             <div>
                 <div>
                     <h3 className='text-2xl font-semibold'>Contact Person Details</h3>
                 </div>
-                <div className='flex flex-col space-y-10 bg-white p-10 mt-5 rounded-lg shadow-md'>
+                <div className='flex flex-col space-y-16 bg-white p-10 mt-5 rounded-lg shadow-md'>
                     <TextField
                         required
                         label="Full Name"
@@ -180,7 +180,7 @@ const Booking = () => {
             <div className='mt-10'>
                 <h3 className='text-2xl font-semibold'>Passenger Details</h3>
             </div>
-            <div className='flex flex-col space-y-10 bg-white p-10 mt-5 rounded-lg shadow-md'>
+            <div className='flex flex-col space-y-16 bg-white p-10 mt-5 rounded-lg shadow-md'>
                 <div className='bg-blue-100 flex lg:flex-row flex-col lg:items-center rounded-lg p-3 justify-between '>
                     <h3 className='font-medium text-sm' style={{color:'#595959'}}>Passenger 1 Adult</h3>
                     <div className='flex space-x-2 items-center text-sm'>
@@ -193,7 +193,7 @@ const Booking = () => {
                 </div>
                 
                 {checked ?
-                <Box sx={{display:'flex', flexDirection:'column'}}>
+                <div className='flex flex-col space-y-16'>
                     <TextField
                         disabled
                         label={fullname ? fullname : 'Full name'}
@@ -222,9 +222,9 @@ const Booking = () => {
                             style: { cursor: "not-allowed" },
                         }}
                     />
-                </Box>
+                </div>
                 :
-                <div className='flex flex-col space-y-5'>
+                <div className='flex flex-col space-y-16'>
                     <TextField
                         required
                         label="Full name"
@@ -278,14 +278,14 @@ const Booking = () => {
 
 
                 <div className='my-10 justify-center flex'>
-                    <Button color='primary' onClick={() => insertBooking()} className='px-10 py-3 font-semibold text-lg' variant='contained' style={{ textTransform: "none", backgroundColor:'#2395FF'}}>Proceed to Payment</Button>
+                    <ButtonInsert onClick={insertBooking} text='Proceed To payment'/>
                 </div>
         </div>
 
 
         <div className='lg:flex hidden w-2/6 flex-col xl:ml-20 ml-10 xxl:mr-40'>
             <h3 className='text-2xl font-semibold'>Flight Details</h3>
-            {isLoading ? <div>Loading...</div> : data && data.map(item => (
+            {isLoading ? <Skeleton variant="rectangular" className='mt-10' animation='wave' width={500} height={350} /> : data && data.map(item => (
             <div className='flex flex-col bg-white mt-5 rounded-lg shadow-md'>
                 <div className='space-y-5 border-b-2 p-7'>
                     <div className='flex items-center mt-2'>

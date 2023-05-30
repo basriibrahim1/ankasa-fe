@@ -1,6 +1,6 @@
 const initialState = {
     data: null,
-    isloading: true,
+    isloading: false,
     isError: null
   };
   

@@ -3,12 +3,11 @@ import Image from "next/image"
 import logo from '../../assets/logo.png'
 import ankasa from '../../assets/ankasa.png'
 import Button from "@mui/material/Button"
-import { CheckCircleOutlined, Visibility, VisibilityOff } from "@mui/icons-material"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { RegisterAction } from "@/storage/action/login/register"
 import { useRouter } from "next/router"
-// import Loading from "@/component/loading"
 
 
 const Register = () => {

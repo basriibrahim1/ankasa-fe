@@ -5,7 +5,7 @@ import UserComponent from '@/component/userComponent'
 import { userPayloadAction } from '@/storage/action/user/userPayloadAction'
 import { userPhotoAction } from '@/storage/action/user/userPhotoAction'
 import { userUpdateAction } from '@/storage/action/user/userUpdateAction'
-import { Button, Input, TextField } from '@mui/material'
+import { Button, Input, Skeleton, TextField } from '@mui/material'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -97,18 +97,19 @@ const Profile = () => {
 
   return (
     <Layout>
-       
-            {cookies.token ? isLoading ? <div>Loading...</div> :
-            <div className='lg:p-20 p-5 mt-10 flex justify-around' style={{backgroundColor:'#F5F6FA'}}>
-                 <div className='hidden md:flex'>
+            <div className='lg:p-20 p-5 mt-10 flex xl:p-20 md:p-10 md:mx-10' style={{backgroundColor:'#F5F6FA'}}>
+                <div className='hidden md:flex w-2/6'>
+                    {isLoading ? <Skeleton variant="rectangular" className='p-7 mx-10' width={350} height={500} animation='wave'/> : 
                     <UserComponent profileColor={{ color: 'white', padding: 10, backgroundColor: 'cadetblue' }} photoPreview={photoPreview} handlePhoto={handlePhoto}/>
+                    }
                 </div>
                 
 
-                <div className='lg:w-4/6 w-full'>
+                <div className='xxl:w-4/6 w-full'>
                     <div className='bg-white rounded-xl shadow-md p-7 space-y-3'>
                         <h3 className='tracking-widest text-blue-500 text-xl font-semibold'>Profile</h3>
                     </div>
+                    {isLoading ?  <Skeleton variant="rectangular" className='mt-5 w-full' height={450} animation='wave'/> : 
                     <div className='bg-white rounded-xl shadow-lg p-7 space-y-3 mt-10'>
                         <div className='border-b-2 space-y-10 pb-14 flex flex-col'>
                         <TextField label='Name' placeholder='Name' value={updateData.name || ''} onChange={handleUpdateData('name')} />
@@ -124,10 +125,11 @@ const Profile = () => {
                             <Button onClick={() => submitForm()} color='info' variant='contained'>Simpan</Button>
                         </div>
                     </div>
+                    }
                 </div>
 
         </div>
-            : router.push('auth/login') }
+
     </Layout>
   )
 }

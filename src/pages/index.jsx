@@ -43,7 +43,7 @@ export default function Home() {
                 </div>
 
 
-                <div className='bg-blue-400 md:flex hidden rounded-3xl overflow-hidden w-full xl:px-40 items-center justify-center flex flex-col space-y-7 mt-10'>
+                <div className='bg-blue-400 md:flex rounded-3xl overflow-hidden w-full xl:px-40 items-center justify-center flex flex-col space-y-7 mt-10'>
                     <h3 className='mt-10 text-white tracking-widest text-xs'>TOP 10</h3>
                     <h3 className='text-white font-semibold text-lg tracking-wide'>Top 10 Destinations</h3>
                     <div className='flex space-x-5'>

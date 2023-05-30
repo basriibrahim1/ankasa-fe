@@ -20,6 +20,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useRouter } from 'next/router';
 import { Search } from '@mui/icons-material';
+import { ProfileMenu } from './Menu';
 
 export const UserNavbar = (props) => {
   const { value, setValue } = props;
@@ -47,17 +48,17 @@ export const UserNavbar = (props) => {
         </ListItem>
         <ListItem className=' mx-5' disablePadding>
             <ListItemButton>
-                <ListItemText primary='Find Ticket' onClick={() => router.push('/home/main')} />
+                <ListItemText primary='Find Ticket' onClick={() => router.push('/home')} />
                 </ListItemButton>
             </ListItem>
         <ListItem className=' mx-5' disablePadding>
             <ListItemButton>
-            <ListItemText primary='My Booking' onClick={() => router.push('/user/mypass')}/>
+            <ListItemText primary='My Booking' onClick={() => router.push('/userpass')}/>
             </ListItemButton>
         </ListItem>
         <ListItem className=' mx-5' disablePadding>
             <ListItemButton>
-            <ListItemText primary='Edit Profile' onClick={() => router.push('/user/profile')}/>
+            <ListItemText primary='Edit Profile' onClick={() => router.push('/profile')}/>
             </ListItemButton>
         </ListItem>
       </List>
@@ -68,7 +69,7 @@ export const UserNavbar = (props) => {
                 <ListItemIcon>
                     <LockIcon />
                 </ListItemIcon>
-                <ListItemText primary='Login' onClick={() => router.push('/auth/login')} />
+                <ListItemText primary='Login' onClick={() => router.push('/login')} />
             </ListItemButton>
         </ListItem>
             <ListItem className='my-4 mx-10' disablePadding>
@@ -76,7 +77,7 @@ export const UserNavbar = (props) => {
                 <ListItemIcon>
                     <PersonAddIcon />
                 </ListItemIcon>
-                <ListItemText primary='Sign Up' onClick={() => router.push('/auth/register')} />
+                <ListItemText primary='Sign Up' onClick={() => router.push('/register')} />
             </ListItemButton>
         </ListItem>
       </List>
@@ -86,7 +87,7 @@ export const UserNavbar = (props) => {
 
   return (
     <div className='flex ml-10 md:justify-around justify-between items-center mt-5'>
-      <div className='flex' onClick={() => router.push('/home/main')}>
+      <div className='flex' onClick={() => router.push('/home')}>
         <Image
           src={ankasa}
           height={50}
@@ -108,12 +109,12 @@ export const UserNavbar = (props) => {
       {/* Desktop Menu */}
       {cookies.token && 
       <div className='hidden md:flex space-x-10 font-semibold text-lg'>
-        <Link href='/home/main'>
+        <Link href='/home'>
           <Button component='a' color='primary' underline='hover'>
             Find Ticket
           </Button>
         </Link>
-        <Link href='/user/mypass'>
+        <Link href='/userpass'>
           <Button component='a' color='primary' underline='hover'>
             My Booking
           </Button>
@@ -126,20 +127,13 @@ export const UserNavbar = (props) => {
         <div className='space-x-10 hidden md:flex text-lg items-center'>
           <MailOutlineIcon />
           <NotificationsNoneIcon />
-          <Image
-            src={cookies.photo}
-            width={70}
-            height={70}
-            alt='user'
-            className='rounded-full border-2 p-2'
-            style={{ objectFit: 'contain' }}
-          />
+          <ProfileMenu />
         </div>
       ) : (
         <div className='space-x-10 hidden md:flex'>
           <Button
             variant='contained'
-            onClick={() => router.push('/auth/register')}
+            onClick={() => router.push('/register')}
             className='text-white'
             style={{ backgroundColor: '#2395FF' }}
           >
@@ -147,7 +141,7 @@ export const UserNavbar = (props) => {
           </Button>
           <Button
             variant='contained'
-            onClick={() => router.push('/auth/login')}
+            onClick={() => router.push('/login')}
             className='text-white'
             style={{ backgroundColor: '#2395FF' }}
           >

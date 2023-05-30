@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import paypal from '../../../assets/pp.jpg'
-import mc from '../../../assets/mc.png'
-import visa from '../../../assets/visa.jpg'
-import stripe from '../../../assets/stripe.png'
-import ae from '../../../assets/ae.png'
+import paypal from '../../assets/pp.jpg'
+import mc from '../../assets/mc.png'
+import visa from '../../assets/visa.jpg'
+import stripe from '../../assets/stripe.png'
+import ae from '../../assets/ae.png'
 import Image from 'next/image'
 import { usePaymentInputs, PaymentInputsWrapper } from 'react-payment-inputs'
 import images from 'react-payment-inputs/images'
@@ -22,7 +22,7 @@ const Payment = () => {
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(true)
     const [data,setData] = useState()
-
+    console.log(data)
     useEffect(() => {
             axios.get(`${process.env.REACT_APP_BASE_URL}/booking/${id}`)
             .then(res => {
@@ -41,7 +41,7 @@ const Payment = () => {
 
 
       const updatePayment = () => {
-        dispatch(BookingUpdateAction(id)).then(router.push('/user/mypass'))
+        dispatch(BookingUpdateAction(id)).then(router.push('/userpass'))
       }
 
 
