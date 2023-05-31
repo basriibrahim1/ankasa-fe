@@ -5,8 +5,7 @@ import { useState } from "react"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router"
-import { useDispatch, useSelector } from "react-redux"
-import { loginAction } from "@/storage/action/login/login"
+import { useDispatch } from "react-redux"
 import axios from 'axios'
 
 export function LoginComponent () {

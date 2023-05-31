@@ -14,11 +14,14 @@ import { Button } from '@mui/material';
 import Filter from '@/component/filter';
 
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
     try {
         const result = await axios.get(`${process.env.REACT_APP_BASE_URL}/ticket`)
         const data = result.data.data
-        return { props: {data}}
+        return {
+            props: {data},
+            revalidate: 1
+        }
     } catch (error) {
         return { props: {error}}
     }
@@ -40,14 +43,15 @@ export const ButtonId = ({id, href, text}) => {
 
 
 const Main = ({data, error}) => {
-    const [page, setPage] = useState(1);
+
     const [cookies, setCookies] = useCookies()
 
-    const itemsPerPage = 2;
 
+    const itemsPerPage = 2;
+    const [page, setPage] = useState(1);
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const handlePageChange = (value) => {
+    const handlePageChange = (e, value) => {
         setPage(value);
     };
 

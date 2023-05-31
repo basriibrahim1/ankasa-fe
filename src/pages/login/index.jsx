@@ -6,7 +6,6 @@ import { LoginComponent } from "../../component/LoginComponent"
 
 
 const LoginPage = () => {
-
   return (
     <>
         <div className="w-full h-screen flex">
