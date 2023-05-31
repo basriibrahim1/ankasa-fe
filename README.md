@@ -41,6 +41,7 @@ Ankasa Flight is a platform designed to booking ticket in an easy and efficient 
 
 This app was built with some technologies below:
 
+
 - [React JS](https://react.dev/)
 - [Next JS](https://nextjs.org/)
 - [Tailwind](https://tailwindcss.com/)
