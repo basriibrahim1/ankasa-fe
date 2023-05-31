@@ -11,7 +11,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
-const Carousel = () => {
+export const Carousel = () => {
     const arrowStylePrev = {
         left: '-50px',
         zIndex: 2,
@@ -121,5 +121,3 @@ const Carousel = () => {
     </> 
   )
 }
-
-export default Carousel

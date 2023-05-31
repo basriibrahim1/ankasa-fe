@@ -1,7 +1,7 @@
 import Image from "next/image"
 import logo from '../../assets/logo.png'
 import ankasa from '../../assets/ankasa.png'
-import { LoginComponent } from "./LoginComponent"
+import { LoginComponent } from "../../component/LoginComponent"
 
 
 

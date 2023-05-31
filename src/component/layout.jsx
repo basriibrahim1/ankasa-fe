@@ -1,17 +1,20 @@
 import Head from "next/head";
+import UserNavbar from "./navbar";
 import Footer from "./footer";
-import { UserNavbar } from "./navbar";
 
 
-export default function Layout({ children }) {
+
+const Layout = ({ children }) => {
   return (
     <>
       <UserNavbar/>
         <Head>
             <title>Ankasa Flight</title>
         </Head>
-      {children}
+        {children}
         <Footer/>
     </>
   );
 }
+
+export default Layout

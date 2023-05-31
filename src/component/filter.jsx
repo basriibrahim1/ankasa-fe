@@ -2,55 +2,9 @@
 
 import { Checkbox, FormControlLabel, FormGroup, Box, Slider, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-export function Filter() {
-    const [filterVisible, setFilterVisible] = useState(false);
-    
-    const handleFilterClick = () => {
-      setFilterVisible(!filterVisible);
-    }
-
-  return (
-    <>
-        <div className=''>
-            <div className='flex lg:justify-between items-center'>
-                <h3 className='text-2xl font-semibold' onClick={() => handleFilterClick()}>Filter</h3>
-                <h3 className='text-md lg:flex hidden font-semibold text-blue-700 mt-1'>Reset</h3>
-            </div>
-                <div className='md:hidden'>
-                    {!filterVisible ? (
-                        <ArrowDropDownIcon onClick={() => handleFilterClick()} className='flex ml-2' />
-                    ) : (
-                        <ArrowDropUpIcon onClick={() => handleFilterClick()} className='flex ml-2' />
-                    )}
-                </div>
-
-                <div className='mt-5 lg:flex flex-col hidden shadow-md bg-white p-8 space-y-5 rounded-lg'>
-                <Transit />
-                <Facilities />
-                <Departure />
-                <Arrived />
-                <Airplane />
-                <TicketPrice />
-                </div>
-
-                {filterVisible &&
-                    <div className='mt-5 md:hidden flex flex-col shadow-md bg-white p-8 space-y-5 rounded-lg'>
-                        <Transit />
-                        <Facilities />
-                        <Departure />
-                        <Arrived />
-                        <Airplane />
-                        <TicketPrice />
-                    </div>
-                }
-        </div>            
-    </>
-  )
-}
 
 
 
@@ -69,7 +23,7 @@ export const Transit = () => {
             <div className='flex justify-between'>
                 <div className='font-semibold text-lg'>Transit</div>
                 <div onClick={handleTransitClick}>
-                    {transitVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    {transitVisible ? <ExpandLess /> : <ExpandMore />}
                 </div>
                 </div>
                 {transitVisible && (
@@ -121,7 +75,7 @@ export const TicketPrice = () => {
             <div className='flex justify-between'>
                 <div className='font-semibold text-lg'>Ticket Price</div>
                     <div onClick={handlePriceClick}>
-                        {PriceVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                        {PriceVisible ? <ExpandLess /> : <ExpandMore />}
                     </div>
             </div>
             {PriceVisible && (
@@ -186,7 +140,7 @@ export const Facilities = () => {
             <div className='flex justify-between'>
                 <div className='font-semibold text-lg'>Facilities</div>
                 <div onClick={handleFacilitiesClick}>
-                    {facilitiesVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                    {facilitiesVisible ? <ExpandLess /> : <ExpandMore />}
                 </div>
             </div>
             {facilitiesVisible && (
@@ -228,7 +182,7 @@ return (
         <div className='border-b-2 mt-5'>
             <div className='flex justify-between'>
                 <div className='font-semibold text-lg'>Departure Time</div>
-                    <div onClick={handleDepartureClick}>{DepartureVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}</div>
+                    <div onClick={handleDepartureClick}>{DepartureVisible ? <ExpandLess /> : <ExpandMore />}</div>
                       </div>
                         {DepartureVisible && (
                             <div className='flex flex-col mt-3'>
@@ -273,7 +227,7 @@ return (
           <div className='flex justify-between'>
               <div className='font-semibold text-lg'>Arrived Time</div>
                   <div onClick={handleArrivedClick}>
-                      {ArrivedVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                      {ArrivedVisible ? <ExpandLess /> : <ExpandMore />}
                    </div>
               </div>
                   {ArrivedVisible && (
@@ -323,7 +277,7 @@ return (
           <div className='flex justify-between'>
               <div className='font-semibold text-lg'>Airlines</div>
                   <div onClick={handleAirlinesClick}>
-                      {AirlinesVisible ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                      {AirlinesVisible ? <ExpandLess /> : <ExpandMore />}
                   </div>
           </div>
           {AirlinesVisible && (
@@ -352,3 +306,53 @@ return (
   </>
 )
 }
+
+
+
+const Filter = () => {
+    const [filterVisible, setFilterVisible] = useState(false);
+    
+    const handleFilterClick = () => {
+      setFilterVisible(!filterVisible);
+    }
+
+  return (
+    <>
+        <div className='w-full'>
+            <div className='flex lg:justify-between items-center'>
+                <h3 className='text-2xl font-semibold cursor-pointer' onClick={handleFilterClick}>Filter</h3>
+                <div className='lg:hidden'>
+                    {!filterVisible ? (
+                        <ExpandMore onClick={() => handleFilterClick()} className='flex ml-2' />
+                    ) : (
+                        <ExpandLess onClick={() => handleFilterClick()} className='flex ml-2' />
+                    )}
+                </div>
+                <h3 className='text-md lg:flex hidden font-semibold text-blue-700 mt-1'>Reset</h3>
+            </div>
+    
+
+
+                {filterVisible &&
+                    <div className='mt-5 lg:hidden flex flex-col shadow-md bg-white p-8 space-y-5 rounded-lg'>
+                        <Transit />
+                        <Facilities />
+                        <Departure />
+                        <Arrived />
+                        <Airplane />
+                        <TicketPrice />
+                </div> }
+                <div className='mt-5 lg:flex flex-col hidden shadow-md bg-white p-8 space-y-5 rounded-lg'>
+                <Transit />
+                <Facilities />
+                <Departure />
+                <Arrived />
+                <Airplane />
+                <TicketPrice />
+                </div>
+        </div>            
+    </>
+  )
+}
+
+export default Filter

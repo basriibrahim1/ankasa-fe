@@ -13,7 +13,6 @@ const DetailPass = () => {
     const {id} = router.query
     const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState()
-    console.log(data)
 
 
     useEffect(() => {

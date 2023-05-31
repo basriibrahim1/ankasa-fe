@@ -22,7 +22,7 @@ import { useRouter } from 'next/router';
 import { Search } from '@mui/icons-material';
 import { ProfileMenu } from './Menu';
 
-export const UserNavbar = (props) => {
+const UserNavbar = (props) => {
   const { value, setValue } = props;
   const router = useRouter()
   const [cookies, setCookies] = useCookies()
@@ -32,7 +32,7 @@ export const UserNavbar = (props) => {
   };
 
 
-  const list = () => (
+const list = () => (
     <Box sx={{ width: 250, transition: 'all 1s' }} role='presentation' onClick={toggleMenu} onKeyDown={toggleMenu}>
       {cookies.token ?
       <List>
@@ -174,3 +174,6 @@ export const UserNavbar = (props) => {
     </div>
   );
 };
+
+
+export default UserNavbar

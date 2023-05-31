@@ -5,7 +5,7 @@ import slider2 from '../assets/2.png'
 import Image from "next/image";
 import Carousel from 'react-elastic-carousel'
 
-const ImageSlider = () => {
+export const ImageSlider = () => {
     const data = [
       {
         id: 1,
@@ -79,5 +79,3 @@ const ImageSlider = () => {
     </>
   )
 }
-
-export default ImageSlider

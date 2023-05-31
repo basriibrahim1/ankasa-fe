@@ -15,7 +15,7 @@ import Layout from '@/component/layout';
 
 
 
-export default function Home() {
+const Home = () => {
   return (
     <Layout>
        
@@ -67,3 +67,6 @@ export default function Home() {
     </Layout>
   )
 }
+
+
+export default Home

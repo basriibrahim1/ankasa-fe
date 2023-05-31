@@ -7,10 +7,11 @@ import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import WifiIcon from '@mui/icons-material/Wifi';
 import axios from 'axios';
 import PaginationComponent from '@/component/pagination';
-import Layout from '@/component/layout';
 import { useCookies } from 'react-cookie';
-import { ButtonId } from '@/component/button';
-import { Filter } from './filter';
+import Layout from '@/component/layout';
+import { useRouter } from 'next/router';
+import { Button } from '@mui/material';
+import Filter from '@/component/filter';
 
 
 export const getServerSideProps = async () => {
@@ -24,6 +25,20 @@ export const getServerSideProps = async () => {
 }
 
 
+export const ButtonId = ({id, href, text}) => {
+    
+    const router = useRouter()
+     const handleClick = () => {
+         router.push(`${href}/${id}`)
+     }
+   return (
+     <div>
+         <Button onClick={handleClick} variant='contained' className='px-10 py-5 font-semibold text-lg' style={{backgroundColor:'#2395FF'}}>{text}</Button>
+     </div>
+   )
+ }
+
+
 const Main = ({data, error}) => {
     const [page, setPage] = useState(1);
     const [cookies, setCookies] = useCookies()
@@ -32,7 +47,7 @@ const Main = ({data, error}) => {
 
     const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const handlePageChange = (event, value) => {
+    const handlePageChange = (value) => {
         setPage(value);
     };
 
